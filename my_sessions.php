@@ -1,0 +1,153 @@
+<?php
+session_start();
+
+// Check if the user is logged in as a Patient
+if ($_SESSION['role'] != 'Patient') {
+    header("Location: index.php"); // Redirect to login page if not a patient
+    exit();
+}
+
+// Include the database connection file
+include 'connection.php';
+
+// Get the logged-in patient's email
+$email = $_SESSION['email'];
+
+// Fetch the patient's details
+$query = "SELECT * FROM patients WHERE email='$email'";
+$result = mysqli_query($conn, $query);
+
+if (mysqli_num_rows($result) > 0) {
+    $patient = mysqli_fetch_assoc($result);
+    $patient_name = $patient['name'];
+    $patient_id = $patient['patient_id'];
+} else {
+    echo "Patient not found!";
+    exit();
+}
+
+// Fetch session details for the patient
+$sessions_query = "SELECT d.name AS doctor_name, a.appointment_date, a.appointment_time 
+                   FROM appointments a
+                   JOIN doctors d ON a.doctor_id = d.doctor_id
+                   WHERE a.patient_id = '$patient_id'
+                   ORDER BY a.appointment_date, a.appointment_time";
+$sessions_result = mysqli_query($conn, $sessions_query);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Sessions</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #343a40;
+            padding-top: 20px;
+            color: white;
+        }
+        .sidebar h4, .sidebar p {
+            text-align: center;
+        }
+        .sidebar a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .section-title {
+            margin-bottom: 20px;
+            color: #0056b3;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e9ecef;
+        }
+        .table th {
+            background-color: #007bff;
+            color: white;
+        }
+        .table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .table tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h4><?php echo $patient_name; ?></h4>
+        <p><?php echo $email; ?></p>
+        <a href="logout.php">Logout</a>
+        <hr>
+        <a href="patient_dashboard.php">Home</a>
+        <a href="my_doctors.php">My Doctors</a>
+        <a href="my_sessions.php" class="active">Scheduled Sessions</a>
+        <a href="my_bookings.php">My Bookings</a>
+        <a href="patient_settings.php">Settings</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h2 class="section-title">Scheduled Sessions</h2>
+
+        <!-- Session Details Table -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Doctor Name</th>
+                    <th>Session Date</th>
+                    <th>Session Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (mysqli_num_rows($sessions_result) > 0): ?>
+                    <?php while ($session = mysqli_fetch_assoc($sessions_result)): ?>
+                        <tr>
+                            <td><?php echo $session['doctor_name']; ?></td>
+                            <td><?php echo $session['appointment_date']; ?></td>
+                            <td><?php echo $session['appointment_time']; ?></td>
+                        </tr>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="3">No session details available.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
