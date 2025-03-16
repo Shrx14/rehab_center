@@ -1,0 +1,23 @@
+# Instructions for Setting Up a Scheduled Task to Update Appointments
+
+## Step 1: Open Task Scheduler
+- Open the **Task Scheduler** from the Start menu.
+
+## Step 2: Create a Basic Task
+- Click on **Create Basic Task** in the right-hand panel.
+- Name the task (e.g., "Update Appointments") and provide a description.
+
+## Step 3: Choose Trigger
+- Choose the trigger (e.g., Daily, Weekly) based on how often you want to check for due appointments.
+- Set the start time and recurrence settings.
+
+## Step 4: Set Action
+- In the **Action** step, select **Start a program**.
+- Browse to the location of your PHP executable (e.g., `C:\xampp\php\php.exe`).
+- In the **Add arguments** field, enter the path to your script: `d:\Work\xampp\htdocs\Rehab\update_appointments.php`.
+
+## Step 5: Complete the Wizard
+- Complete the wizard and save the task.
+
+## Note:
+- Ensure that the MySQL server is running for the script to function correctly.

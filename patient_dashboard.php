@@ -32,9 +32,21 @@ $doctor_count_query = "SELECT COUNT(DISTINCT doctor_id) AS doctor_count FROM app
 $doctor_count_result = mysqli_query($conn, $doctor_count_query);
 $doctor_count = mysqli_fetch_assoc($doctor_count_result)['doctor_count'];
 
-// Fetch upcoming sessions
-$upcoming_sessions_query = "SELECT * FROM appointments WHERE patient_id = '$patient_id' AND appointment_date >= CURDATE() ORDER BY appointment_date ASC";
+// Fetch upcoming sessions as JSON for the calendar
+$appointments = [];
+$upcoming_sessions_query = "SELECT appointment_id, appointment_date, appointment_time FROM appointments 
+                            WHERE patient_id = '$patient_id' AND appointment_date >= CURDATE() ORDER BY appointment_date ASC";
 $upcoming_sessions_result = mysqli_query($conn, $upcoming_sessions_query);
+
+while ($session = mysqli_fetch_assoc($upcoming_sessions_result)) {
+    $appointments[] = [
+        'title' => 'Appointment',
+        'start' => $session['appointment_date'] . 'T' . $session['appointment_time']
+    ];
+}
+
+// Convert PHP array to JSON
+$appointments_json = json_encode($appointments);
 
 // Get current page from the URL, default to 'home' if not set
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
@@ -54,6 +66,8 @@ switch ($page) {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Patient Dashboard</title>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.8/index.global.min.css" rel="stylesheet">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.8/index.global.min.js"></script>
             <style>
                 body {
                     font-family: Arial, sans-serif;
@@ -121,6 +135,14 @@ switch ($page) {
                     color: #555;
                     font-size: 18px;
                 }
+                #calendar {
+                    max-width: 900px;
+                    margin: auto;
+                    background: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+                }
             </style>
         </head>
         <body>
@@ -151,19 +173,7 @@ switch ($page) {
                     <!-- Upcoming Sessions -->
                     <div class="card">
                         <h5>Upcoming Sessions</h5>
-                        <?php
-                        if (mysqli_num_rows($upcoming_sessions_result) > 0) {
-                            echo "<ul>";
-                            while ($session = mysqli_fetch_assoc($upcoming_sessions_result)) {
-                                echo "<li>";
-                                echo "Date: " . $session['appointment_date'] . " | Time: " . $session['appointment_time'];
-                                echo "</li>";
-                            }
-                            echo "</ul>";
-                        } else {
-                            echo "<p>No upcoming sessions.</p>";
-                        }
-                        ?>
+                        <div id="calendar"></div>
                     </div>
 
                     <!-- Assigned Doctors -->
@@ -178,6 +188,22 @@ switch ($page) {
                     "The journey of a thousand miles begins with a single step."
                 </div>
             </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var calendarEl = document.getElementById('calendar');
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'dayGridMonth',
+                        events: <?php echo $appointments_json; ?>,
+                        headerToolbar: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                        }
+                    });
+                    calendar.render();
+                });
+            </script>
 
         </body>
         </html>

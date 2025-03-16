@@ -26,8 +26,9 @@ if (mysqli_num_rows($result) > 0) {
     exit();
 }
 
-// Fetch available doctors
-$doctors_query = "SELECT doctor_id, name, email FROM doctors";
+// Fetch all doctors with their availability status
+$doctors_query = "SELECT d.doctor_id, d.name, d.email, d.speciality, d.appointment_count, d.max_patients 
+                  FROM doctors d";
 $doctors_result = mysqli_query($conn, $doctors_query);
 
 // Check if form is submitted
@@ -38,14 +39,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $appointment_time = $_POST['appointment_time'];
     $message = $_POST['message'];
 
-    // Insert the appointment into the appointments table
-    $insert_query = "INSERT INTO appointments (patient_id, doctor_id, appointment_date, appointment_time, status)
-                     VALUES ('$patient_id', '$doctor_id', '$appointment_date', '$appointment_time', 'Pending')";
+    // Check if the selected doctor is available
+    $availability_query = "SELECT appointment_count, max_patients, name FROM doctors WHERE doctor_id='$doctor_id'";
+    $availability_result = mysqli_query($conn, $availability_query);
+    $doctor_info = mysqli_fetch_assoc($availability_result);
 
-    if (mysqli_query($conn, $insert_query)) {
-        $success_message = "Your appointment has been booked successfully!";
+    if ($doctor_info['appointment_count'] >= $doctor_info['max_patients']) {
+        $success_message = "Dr. " . $doctor_info['name'] . " is not available for booking. Please choose another doctor.";
     } else {
-        $success_message = "Error booking appointment: " . mysqli_error($conn);
+        // Insert the appointment into the appointments table
+        $insert_query = "INSERT INTO appointments (patient_id, doctor_id, appointment_date, appointment_time, status)
+                         VALUES ('$patient_id', '$doctor_id', '$appointment_date', '$appointment_time', 'Pending')";
+
+        if (mysqli_query($conn, $insert_query)) {
+            // Update the appointment count in the doctors table
+            $update_count_query = "UPDATE doctors 
+                                   SET appointment_count = appointment_count + 1 
+                                   WHERE doctor_id = '$doctor_id'";
+            mysqli_query($conn, $update_count_query);
+
+            $success_message = "Your appointment with Dr. " . $doctor_info['name'] . " has been booked successfully!";
+        } else {
+            $success_message = "Error booking appointment: " . mysqli_error($conn);
+        }
     }
 }
 ?>
@@ -125,8 +141,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
+<!-- Sidebar -->
+<div class="sidebar">
         <h4><?php echo $patient_name; ?></h4>
         <p><?php echo $email; ?></p>
         <a href="logout.php">Logout</a>
@@ -138,57 +154,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <a href="patient_settings.php">Settings</a>
     </div>
 
-    <!-- Main Content -->
     <div class="main-content">
         <h2>Book an Appointment</h2>
 
-        <!-- Success Message -->
+        <!-- Success/Failure Message -->
         <?php if ($success_message): ?>
-            <div class="alert alert-success">
+            <div class="alert alert-info">
                 <?php echo $success_message; ?>
             </div>
         <?php endif; ?>
 
         <!-- Appointment Booking Form -->
-        <div class="form-section">
-            <h3>Select Doctor and Appointment Details</h3>
-            <form action="my_bookings.php" method="POST">
+        <form action="my_bookings.php" method="POST">
 
-                <!-- Select Doctor -->
-                <div class="form-group">
-                    <label for="doctor_id">Select Doctor</label>
-                    <select name="doctor_id" class="form-control" required>
-                        <option value="">--Select Doctor--</option>
-                        <?php while ($doctor = mysqli_fetch_assoc($doctors_result)): ?>
-                            <option value="<?php echo $doctor['doctor_id']; ?>">
-                                <?php echo $doctor['name']; ?> (<?php echo $doctor['email']; ?>)
-                            </option>
-                        <?php endwhile; ?>
-                    </select>
-                </div>
+            <!-- Select Doctor -->
+            <div class="form-group">
+                <label for="doctor_id">Select Doctor</label>
+                <select name="doctor_id" class="form-control" required>
+                    <option value="">--Select Doctor--</option>
+                    <?php while ($doctor = mysqli_fetch_assoc($doctors_result)): ?>
+                        <?php
+                        $availability = ($doctor['appointment_count'] >= $doctor['max_patients']) ? " (Not Available)" : "";
+                        ?>
+                        <option value="<?php echo $doctor['doctor_id']; ?>" 
+                                <?php echo ($availability) ? "disabled" : ""; ?>>
+                            Dr. <?php echo $doctor['name']; ?> - <?php echo $doctor['speciality']; ?> <?php echo $availability; ?>
+                        </option>
+                    <?php endwhile; ?>
+                </select>
+            </div>
 
-                <!-- Select Appointment Date -->
-                <div class="form-group">
-                    <label for="appointment_date">Select Appointment Date</label>
-                    <input type="date" name="appointment_date" class="form-control" required>
-                </div>
+            <!-- Select Appointment Date -->
+            <div class="form-group">
+                <label for="appointment_date">Select Appointment Date</label>
+                <input type="date" name="appointment_date" class="form-control" required>
+            </div>
 
-                <!-- Select Appointment Time -->
-                <div class="form-group">
-                    <label for="appointment_time">Select Appointment Time</label>
-                    <input type="time" name="appointment_time" class="form-control" required>
-                </div>
+            <!-- Select Appointment Time -->
+            <div class="form-group">
+                <label for="appointment_time">Select Appointment Time</label>
+                <input type="time" name="appointment_time" class="form-control" required>
+            </div>
 
-                <!-- Optional Message to Doctor -->
-                <div class="form-group">
-                    <label for="message">Additional Details (Optional)</label>
-                    <textarea name="message" class="form-control" rows="4"></textarea>
-                </div>
+            <!-- Optional Message to Doctor -->
+            <div class="form-group">
+                <label for="message">Additional Details (Optional)</label>
+                <textarea name="message" class="form-control" rows="4"></textarea>
+            </div>
 
-                <!-- Submit Button -->
-                <button type="submit" class="submit-btn">Book Appointment</button>
-            </form>
-        </div>
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary submit-btn">Book Appointment</button>
+        </form>
     </div>
 
 </body>
