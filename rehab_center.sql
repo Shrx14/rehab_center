@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3307
--- Generation Time: Mar 10, 2025 at 10:45 AM
+-- Host: 127.0.0.1
+-- Generation Time: Mar 16, 2025 at 10:26 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -61,12 +61,12 @@ CREATE TABLE `appointments` (
 --
 
 INSERT INTO `appointments` (`appointment_id`, `patient_id`, `doctor_id`, `appointment_date`, `appointment_time`, `status`) VALUES
-(1, 14, 1, '2025-03-10', '00:00:00', 'Scheduled'),
+(1, 14, 1, '2025-03-10', '00:00:00', 'Completed'),
 (2, 8, 2, '2025-03-11', '00:00:00', 'Completed'),
-(3, 21, 3, '2025-03-12', '00:00:00', 'Scheduled'),
-(4, 22, 4, '2025-03-13', '00:00:00', 'Scheduled'),
+(3, 21, 3, '2025-03-12', '00:00:00', 'Completed'),
+(4, 22, 4, '2025-03-13', '00:00:00', 'Completed'),
 (5, 9, 5, '2025-03-14', '00:00:00', 'Cancelled'),
-(6, 7, 6, '2025-03-15', '00:00:00', 'Scheduled'),
+(6, 7, 6, '2025-03-15', '00:00:00', 'Completed'),
 (7, 18, 7, '2025-03-16', '00:00:00', 'Completed'),
 (8, 23, 8, '2025-03-17', '00:00:00', 'Scheduled'),
 (9, 19, 9, '2025-03-18', '00:00:00', 'Scheduled'),
@@ -82,8 +82,9 @@ INSERT INTO `appointments` (`appointment_id`, `patient_id`, `doctor_id`, `appoin
 (19, 18, 19, '2025-03-28', '00:00:00', 'Scheduled'),
 (20, 23, 20, '2025-03-29', '00:00:00', 'Cancelled'),
 (21, 19, 22, '2025-03-30', '00:00:00', 'Scheduled'),
-(81, 17, 1, '2025-03-30', '15:30:00', 'Pending'),
-(82, 18, 1, '2025-03-24', '14:15:00', 'Pending');
+(81, 17, 1, '2025-03-30', '15:30:00', 'Scheduled'),
+(82, 18, 1, '2025-03-24', '14:15:00', 'Scheduled'),
+(83, 19, 1, '2025-03-15', '14:15:00', 'Completed');
 
 -- --------------------------------------------------------
 
@@ -125,26 +126,26 @@ CREATE TABLE `doctors` (
 --
 
 INSERT INTO `doctors` (`doctor_id`, `name`, `speciality`, `email`, `password`, `phone`, `experience`, `visit_days`, `max_patients`, `role_id`, `appointment_count`) VALUES
-(1, 'Amit S', 'Neurologist', 'amits1@rehab.com', 'amits1', '+91 9876543210', '5 years', 'Monday, Tuesday, Friday', 4, 2, 5),
-(2, 'Dr. John Doe', 'Cardiologist', 'johndoe@rehab.com', 'johndoc1', '+91 9123456781', '10 years', 'Monday, Wednesday, Friday', 6, 2, 1),
-(3, 'Dr. Sarah Lee', 'Orthopedic', 'sarahlee@rehab.com', 'sarahdoc1', '+91 9234567892', '8 years', 'Tuesday, Thursday, Saturday', 4, 2, 1),
-(4, 'Dr. Michael Brown', 'Dermatologist', 'michaelbrown@rehab.com', 'mikedoc1', '+91 9345678903', '12 years', 'Monday, Tuesday, Thursday', 5, 2, 1),
-(5, 'Dr. Emily Davis', 'Pediatrician', 'emilydavis@rehab.com', 'emilydoc1', '+91 9456789014', '7 years', 'Wednesday, Friday, Saturday', 6, 2, 1),
-(6, 'Dr. Liam White', 'Gastroenterologist', 'liamwhite@rehab.com', 'liamdoc1', '+91 9567890125', '9 years', 'Tuesday, Thursday, Friday', 5, 2, 1),
-(7, 'Dr. Sophia Green', 'Psychiatrist', 'sophiagreen@rehab.com', 'sophiadoc1', '+91 9678901236', '5 years', 'Monday, Wednesday, Friday', 4, 2, 1),
+(1, 'Dr. Amit S', 'Neurologist', 'amits1@rehab.com', 'amits1', '+91 9876543210', '5 years', 'Monday, Tuesday, Friday', 4, 2, 2),
+(2, 'Dr. John Doe', 'Cardiologist', 'johndoe@rehab.com', 'johndoc1', '+91 9123456781', '10 years', 'Monday, Wednesday, Friday', 6, 2, 0),
+(3, 'Dr. Sarah Lee', 'Orthopedic', 'sarahlee@rehab.com', 'sarahdoc1', '+91 9234567892', '8 years', 'Tuesday, Thursday, Saturday', 4, 2, 0),
+(4, 'Dr. Michael Brown', 'Dermatologist', 'michaelbrown@rehab.com', 'mikedoc1', '+91 9345678903', '12 years', 'Monday, Tuesday, Thursday', 5, 2, 0),
+(5, 'Dr. Emily Davis', 'Pediatrician', 'emilydavis@rehab.com', 'emilydoc1', '+91 9456789014', '7 years', 'Wednesday, Friday, Saturday', 6, 2, 0),
+(6, 'Dr. Liam White', 'Gastroenterologist', 'liamwhite@rehab.com', 'liamdoc1', '+91 9567890125', '9 years', 'Tuesday, Thursday, Friday', 5, 2, 0),
+(7, 'Dr. Sophia Green', 'Psychiatrist', 'sophiagreen@rehab.com', 'sophiadoc1', '+91 9678901236', '5 years', 'Monday, Wednesday, Friday', 4, 2, 0),
 (8, 'Dr. William Hall', 'Oncologist', 'williamhall@rehab.com', 'willdoc1', '+91 9789012347', '15 years', 'Monday, Tuesday, Friday', 8, 2, 1),
 (9, 'Dr. Olivia Scott', 'Neurologist', 'oliviascott@rehab.com', 'oliviadoc1', '+91 9890123458', '11 years', 'Tuesday, Thursday, Saturday', 5, 2, 1),
 (10, 'Dr. James Martinez', 'Endocrinologist', 'jamesmartinez@rehab.com', 'jamesdoc1', '+91 9901234569', '10 years', 'Wednesday, Friday, Saturday', 6, 2, 1),
-(11, 'Dr. Charlotte King', 'Urologist', 'charlotteking@rehab.com', 'charlottedoc1', '+91 9012345670', '6 years', 'Monday, Wednesday, Friday', 4, 2, 1),
+(11, 'Dr. Charlotte King', 'Urologist', 'charlotteking@rehab.com', 'charlottedoc1', '+91 9012345670', '6 years', 'Monday, Wednesday, Friday', 4, 2, 0),
 (12, 'Dr. Benjamin Lopez', 'Hematologist', 'benjaminlopez@rehab.com', 'benjamindoc1', '+91 9123456781', '8 years', 'Tuesday, Thursday, Saturday', 5, 2, 1),
-(13, 'Dr. Mia Clark', 'Radiologist', 'miaclark@rehab.com', 'miadoc1', '+91 9234567892', '7 years', 'Monday, Tuesday, Thursday', 5, 2, 1),
+(13, 'Dr. Mia Clark', 'Radiologist', 'miaclark@rehab.com', 'miadoc1', '+91 9234567892', '7 years', 'Monday, Tuesday, Thursday', 5, 2, 0),
 (14, 'Dr. Elijah Walker', 'Pulmonologist', 'elijahwalker@rehab.com', 'elijahdoc1', '+91 9345678903', '9 years', 'Wednesday, Friday, Saturday', 6, 2, 1),
 (15, 'Dr. Abigail Adams', 'Nephrologist', 'abigailadams@rehab.com', 'abigaildoc1', '+91 9456789014', '10 years', 'Monday, Wednesday, Friday', 5, 2, 1),
-(16, 'Dr. Lucas Young', 'Ophthalmologist', 'lucasyoung@rehab.com', 'lucasdoc1', '+91 9567890125', '5 years', 'Tuesday, Thursday, Friday', 4, 2, 1),
+(16, 'Dr. Lucas Young', 'Ophthalmologist', 'lucasyoung@rehab.com', 'lucasdoc1', '+91 9567890125', '5 years', 'Tuesday, Thursday, Friday', 4, 2, 0),
 (17, 'Dr. Amelia Allen', 'Allergist', 'ameliaallen@rehab.com', 'ameliadoc1', '+91 9678901236', '12 years', 'Monday, Wednesday, Friday', 7, 2, 1),
 (18, 'Dr. Noah Harris', 'Rheumatologist', 'noahharris@rehab.com', 'noahdoc1', '+91 9789012347', '11 years', 'Tuesday, Thursday, Saturday', 5, 2, 1),
 (19, 'Dr. Isabella Hill', 'Surgeon', 'isabellahill@rehab.com', 'isabelladoc1', '+91 9890123458', '8 years', 'Wednesday, Friday, Saturday', 6, 2, 1),
-(20, 'Dr. Ethan Campbell', 'Pathologist', 'ethancampbell@rehab.com', 'ethandoc1', '+91 9901234569', '9 years', 'Monday, Tuesday, Thursday', 5, 2, 1),
+(20, 'Dr. Ethan Campbell', 'Pathologist', 'ethancampbell@rehab.com', 'ethandoc1', '+91 9901234569', '9 years', 'Monday, Tuesday, Thursday', 5, 2, 0),
 (22, 'Aryan M', 'Psychologist', 'aryanmdoc@rehab.com', '$2y$10$4tCDdCo2uqq/2ylvstnbtekeJtcuODGHQhaUn/Z4AhchRoZKcOBpK', '+919898982341', '4', 'Monday', 2, 2, 1);
 
 -- --------------------------------------------------------
@@ -314,7 +315,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `billing`
