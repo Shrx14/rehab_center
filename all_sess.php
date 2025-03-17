@@ -135,7 +135,6 @@ $sessions_result = mysqli_query($conn, $sessions_query);
     color: black;
 }
 
-        }
         .btn:hover {
             filter: brightness(90%);
         }

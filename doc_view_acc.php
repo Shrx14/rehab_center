@@ -81,16 +81,16 @@ $user = mysqli_fetch_assoc($result);
                 <td><?php echo $user['speciality']; ?></td>
             </tr>
             <tr>
-                <th>Visit Days</th>
-                <td><?php echo $user['visit_days']; ?></td>
-            </tr>
-            <tr>
                 <th>Experience</th>
                 <td><?php echo $user['experience']; ?></td>
             </tr>
             <tr>
                 <th>Maximum Number of Patients (Patient Intake)</th>
                 <td><?php echo $user['max_patients']; ?></td>
+            </tr>
+            <tr>
+                <th>Current Scheduled Appointments</th>
+                <td><?php echo $user['appointment_count']; ?></td>
             </tr>
         </table>
     </div>

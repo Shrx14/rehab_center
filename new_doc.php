@@ -13,13 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $specialty = mysqli_real_escape_string($conn, $_POST['speciality']);
     $phone = mysqli_real_escape_string($conn, $_POST['phone']);
     $experience = mysqli_real_escape_string($conn, $_POST['experience']);
-    $visit_days = mysqli_real_escape_string($conn, $_POST['visit_days']);
     $max_patients = mysqli_real_escape_string($conn, $_POST['max_patients']);
+    $appointment_count = 0; // Initialize appointment_count to 0
+
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $role_id = 2;
 
-    $query = "INSERT INTO doctors (name, email, speciality, phone, experience, visit_days, max_patients, password, role_id) 
-              VALUES ('$name', '$email', '$specialty', '$phone', '$experience', '$visit_days', '$max_patients', '$password', '$role_id')";
+    $query = "INSERT INTO doctors (name, email, speciality, phone, experience, visit_days, max_patients, appointment_count, password, role_id) 
+              VALUES ('$name', '$email', '$specialty', '$phone', '$experience', '$visit_days', '$max_patients', '$appointment_count', '$password', '$role_id')";
 
     if (mysqli_query($conn, $query)) {
         header("Location: all_doc.php?success=Doctor added successfully");
@@ -113,11 +114,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="form-group">
                 <label for="experience" class="form-label">Years of Experience</label>
                 <input type="number" id="experience" name="experience" class="form-control" placeholder="Years of Experience" required>
-            </div>
-
-            <div class="form-group">
-                <label for="visit_days" class="form-label">Visit Days (e.g., Mon-Fri)</label>
-                <input type="text" id="visit_days" name="visit_days" class="form-control" placeholder="Visit Days" required>
             </div>
 
             <div class="form-group">

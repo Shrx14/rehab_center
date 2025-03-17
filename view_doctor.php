@@ -101,11 +101,11 @@ if (!$doctor) {
             <label>Experience:</label>
             <p><?php echo htmlspecialchars($doctor['experience']); ?></p>
 
-            <label>Visit Days:</label>
-            <p><?php echo htmlspecialchars($doctor['visit_days']); ?></p>
-
             <label>Maximum Patients:</label>
             <p><?php echo htmlspecialchars($doctor['max_patients']); ?></p>
+
+            <label>Scheduled Appointments:</label>
+            <p><?php echo htmlspecialchars($doctor['scheduled_appointments']); ?></p>
         </div>
         <a href="all_doc.php" class="btn-back">Back to Doctors List</a>
     </div>

@@ -10,7 +10,7 @@ if ($_SESSION['role'] != 'Admin') {
 include 'connection.php';
 
 // Fetch all doctors from the database
-$doctors_query = "SELECT doctor_id, name, speciality, email, phone, experience, visit_days, max_patients FROM doctors";
+$doctors_query = "SELECT doctor_id, name, speciality, email, phone, experience, max_patients FROM doctors";
 
 $doctors_result = mysqli_query($conn, $doctors_query);
 ?>
@@ -200,6 +200,7 @@ $doctors_result = mysqli_query($conn, $doctors_query);
                         <th>Experience</th>
                         <th>Visit Days</th>
                         <th>Max Patients</th>
+                        <th>Appointment Count</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -213,8 +214,8 @@ $doctors_result = mysqli_query($conn, $doctors_query);
                                 <td><?php echo $doctor['email']; ?></td>
                                 <td><?php echo $doctor['phone']; ?></td>
                                 <td><?php echo $doctor['experience']; ?></td>
-                                <td><?php echo $doctor['visit_days']; ?></td>
                                 <td><?php echo $doctor['max_patients']; ?></td>
+                                <td><?php echo $doctor['appointment_count']; ?></td>
                                 <td>
                                     <div class="action-buttons">
                                         <a href="view_doctor.php?email=<?php echo urlencode($doctor['email']); ?>" class="btn btn-view btn-sm">View</a>

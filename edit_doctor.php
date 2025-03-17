@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $experience = mysqli_real_escape_string($conn, $_POST['experience']);
     $visit_days = mysqli_real_escape_string($conn, $_POST['visit_days']);
     $max_patients = mysqli_real_escape_string($conn, $_POST['max_patients']);
+    $appointment_count = mysqli_real_escape_string($conn, $_POST['appointment_count']);
 
     // Validate phone number format
     if (!preg_match('/^\+91\d{10}$/', $phone)) {
@@ -47,9 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 name = '$name', 
                 phone = '$phone', 
                 speciality = '$speciality', 
-                experience = '$experience', 
-                visit_days = '$visit_days', 
-                max_patients = '$max_patients' 
+                experience = '$experience',  
+                max_patients = '$max_patients',
+                appointment_count = '$appointment_count'
             WHERE email = '$email'";
 
         if (mysqli_query($conn, $update_query)) {
@@ -167,12 +168,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="text" name="experience" class="form-control" value="<?php echo htmlspecialchars($doctor['experience']); ?>" required>
             </div>
             <div class="form-group">
-                <label>Visit Days</label>
-                <input type="text" name="visit_days" class="form-control" value="<?php echo htmlspecialchars($doctor['visit_days']); ?>" required>
-            </div>
-            <div class="form-group">
                 <label>Maximum Patients</label>
                 <input type="number" name="max_patients" class="form-control" value="<?php echo htmlspecialchars($doctor['max_patients']); ?>" required>
+            </div>
+            <div class="form-group">
+                <label>Current Scheduled Appointments</label>
+                <input type="number" name="appointment_count" class="form-control" value="<?php echo htmlspecialchars($doctor['appointment_count']); ?>" required>
             </div>
             <button type="submit" class="btn btn-primary">Update Doctor</button>
         </form>

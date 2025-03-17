@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = $_POST['phone'];
     $speciality = $_POST['speciality'];
     $experience = $_POST['experience'];
-    $visit_days = $_POST['visit_days'];
     $max_patients = $_POST['max_patients'];
     $old_password = $_POST['old_password'];
     $new_password = $_POST['new_password'];
@@ -47,7 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             phone = '$phone', 
             speciality = '$speciality', 
             experience = '$experience', 
-            visit_days = '$visit_days', 
             max_patients = '$max_patients'";
             
         // Only update password if a new one was provided
@@ -170,10 +168,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="text" name="experience" class="form-control" value="<?php echo $user['experience']; ?>" required>
             </div>
             <div class="form-group">
-                <label>Visit Days</label>
-                <input type="text" name="visit_days" class="form-control" value="<?php echo $user['visit_days']; ?>" required>
-            </div>
-            <div class="form-group">
                 <label>Maximum Patients (Patient Intake)</label>
                 <input type="text" name="max_patients" class="form-control" value="<?php echo $user['max_patients']; ?>" required>
             </div>
@@ -182,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="password" name="old_password" class="form-control">
             </div>
             <div class="form-group">
-                <label>New Password (Optional</label>
+                <label>New Password (Optional)</label>
                 <input type="password" name="new_password" class="form-control">
             </div>
             <button type="submit" class="btn btn-primary">Update Account</button>

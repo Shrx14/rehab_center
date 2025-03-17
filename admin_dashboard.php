@@ -39,8 +39,7 @@ $booking_count_query = "SELECT COUNT(*) AS booking_count FROM appointments";
 $booking_count_result = mysqli_query($conn, $booking_count_query);
 $booking_count = mysqli_fetch_assoc($booking_count_result)['booking_count'];
 
-// Fetch today's sessions count from 'therapy_sessions' table
-$session_count_query = "SELECT COUNT(*) AS session_count FROM therapy_sessions WHERE session_date = CURDATE()";
+$session_count_query = "SELECT COUNT(*) AS session_count FROM therapy_sessions";
 $session_count_result = mysqli_query($conn, $session_count_query);
 $session_count = mysqli_fetch_assoc($session_count_result)['session_count'];
 ?>
@@ -200,17 +199,13 @@ $session_count = mysqli_fetch_assoc($session_count_result)['session_count'];
                 <p>Total: <?php echo $patient_count; ?></p>
             </div>
             <div class="card">
-                <h5>New Bookings</h5>
+                <h5>Total Appointments</h5>
                 <p>Total: <?php echo $booking_count; ?></p>
             </div>
             <div class="card">
-                <h5>Today's Sessions</h5>
+                <h5>Completed Sessions</h5>
                 <p>Total: <?php echo $session_count; ?></p>
             </div>
-        </div>
-        <div class="card mt-4">
-            <h5>This Week's Sessions</h5>
-            <button class="btn btn-primary">Show This Week's Sessions</button>
         </div>
     </div>
 </body>

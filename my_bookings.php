@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $doctor_info = mysqli_fetch_assoc($availability_result);
 
     if ($doctor_info['appointment_count'] >= $doctor_info['max_patients']) {
-        $success_message = "Dr. " . $doctor_info['name'] . " is not available for booking. Please choose another doctor.";
+        $success_message = $doctor_info['name'] . " is not available for booking. Please choose another doctor.";
     } else {
         // Insert the appointment into the appointments table
         $insert_query = "INSERT INTO appointments (patient_id, doctor_id, appointment_date, appointment_time, status)
@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                    WHERE doctor_id = '$doctor_id'";
             mysqli_query($conn, $update_count_query);
 
-            $success_message = "Your appointment with Dr. " . $doctor_info['name'] . " has been booked successfully!";
+            $success_message = "Your appointment with " . $doctor_info['name'] . " has been booked successfully!";
         } else {
             $success_message = "Error booking appointment: " . mysqli_error($conn);
         }
@@ -194,12 +194,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="form-group">
                 <label for="appointment_time">Select Appointment Time</label>
                 <input type="time" name="appointment_time" class="form-control" required>
-            </div>
-
-            <!-- Optional Message to Doctor -->
-            <div class="form-group">
-                <label for="message">Additional Details (Optional)</label>
-                <textarea name="message" class="form-control" rows="4"></textarea>
             </div>
 
             <!-- Submit Button -->

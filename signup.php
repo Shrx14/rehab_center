@@ -84,8 +84,6 @@
                         <input type="text" name="speciality" class="form-control" placeholder="Enter your specialty">
                         <label for="max_patients">Patient Intake</label>
                         <input type="text" name="max_patients" class="form-control" placeholder="Enter the maximum patients intake">
-                        <label for="visit_days">Visit Days</label>
-                        <input type="text" name="visit_days" class="form-control" placeholder="Enter your visit days in a week">
                     </div>
                     <div class="form-group" id="patient_fields" style="display: none;">
                         <label for="age">Age</label>

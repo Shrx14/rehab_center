@@ -22,10 +22,9 @@ if (isset($_POST['signup'])) {
     } elseif ($role === "Doctor") {
         $speciality = $_POST['speciality'];
         $max_patients = $_POST['max_patients'];
-        $visit_days = $_POST['visit_days'];
         $role_id = 2;
-        $query = "INSERT INTO doctors (name, speciality, email, password, phone, role_id, max_patients, experience, visit_days) 
-                  VALUES ('$name', '$speciality', '$email', '$password', '$phone', $role_id, '$max_patients', '$experience', '$visit_days')";
+        $query = "INSERT INTO doctors (name, speciality, email, password, phone, role_id, max_patients, experience) 
+                  VALUES ('$name', '$speciality', '$email', '$password', '$phone', $role_id, '$max_patients', '$experience')";
     } elseif ($role === "Patient") {
         $age = $_POST['age'];
         $address = $_POST['address'];

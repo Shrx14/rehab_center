@@ -164,8 +164,8 @@ $session_count = mysqli_fetch_assoc($todays_sessions_result)['session_count'];
 
             <!-- Number of Bookings -->
             <div class="card">
-                <h5>Total Bookings</h5>
-                <p>You have <?php echo $booking_count; ?> bookings.</p>
+                <h5>Total Appointments</h5>
+                <p>You have <?php echo $booking_count; ?> appointments.</p>
             </div>
 
             <!-- Today's Sessions -->
