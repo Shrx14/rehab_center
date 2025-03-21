@@ -1,6 +1,5 @@
 <?php
 session_start();
-include 'connection.php';
 
 // Check if the user is logged in as Admin
 if ($_SESSION['role'] != 'Admin') {
@@ -8,57 +7,36 @@ if ($_SESSION['role'] != 'Admin') {
     exit();
 }
 
-// Check if email parameter is set
-if (!isset($_GET['email'])) {
-    header("Location: all_doc.php");
-    exit();
+include 'connection.php';
+
+if (isset($_GET['id'])) {
+    $doctor_id = $_GET['id'];
+    $sql = "SELECT * FROM doctors WHERE doctor_id='$doctor_id'";
+    $result = mysqli_query($conn, $sql);
+    $doctor = mysqli_fetch_assoc($result);
 }
 
-$email = urldecode($_GET['email']);
-$query = "SELECT * FROM doctors WHERE email = '$email'";
-$result = mysqli_query($conn, $query);
-$doctor = mysqli_fetch_assoc($result);
+if (isset($_POST['update'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $speciality = $_POST['speciality'];
+    $phone = $_POST['phone'];
+    $experience = $_POST['experience'];
+    $max_patients = $_POST['max_patients'];
 
-if (!$doctor) {
-    header("Location: all_doc.php?error=Doctor not found");
-    exit();
-}
+    $sql = "UPDATE doctors SET name='$name', email='$email', password='$password', speciality='$speciality', phone='$phone', experience='$experience', max_patients='$max_patients' WHERE doctor_id='$doctor_id'";
 
-$success = '';
-$error = '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = mysqli_real_escape_string($conn, $_POST['name']);
-    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
-    $speciality = mysqli_real_escape_string($conn, $_POST['speciality']);
-    $experience = mysqli_real_escape_string($conn, $_POST['experience']);
-    $visit_days = mysqli_real_escape_string($conn, $_POST['visit_days']);
-    $max_patients = mysqli_real_escape_string($conn, $_POST['max_patients']);
-    $appointment_count = mysqli_real_escape_string($conn, $_POST['appointment_count']);
-
-    // Validate phone number format
-    if (!preg_match('/^\+91\d{10}$/', $phone)) {
-        $error = "Invalid phone number. Please enter a valid Indian phone number with country code +91 followed by 10 digits.";
-    }
-
-    if (empty($error)) {
-        $update_query = "
-            UPDATE doctors 
-            SET 
-                name = '$name', 
-                phone = '$phone', 
-                speciality = '$speciality', 
-                experience = '$experience',  
-                max_patients = '$max_patients',
-                appointment_count = '$appointment_count'
-            WHERE email = '$email'";
-
-        if (mysqli_query($conn, $update_query)) {
-            $success = "Doctor details updated successfully.";
-            header("Refresh: 2; url=all_doc.php");
-        } else {
-            $error = "Failed to update doctor: " . mysqli_error($conn);
-        }
+    if (mysqli_query($conn, $sql)) {
+        echo "<script>
+                alert('Doctor updated successfully!');
+                window.location.href = 'all_doc.php';
+              </script>";
+    } else {
+        echo "<script>
+                alert('Error: " . mysqli_error($conn) . "');
+                window.history.back();
+              </script>";
     }
 }
 ?>
@@ -69,6 +47,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Doctor</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Keep the existing CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Doctor</h1>
+        <form method="POST" action="">
+            <input type="hidden" name="doctor_id" value="<?php echo $doctor['doctor_id']; ?>">
+            <label>Name:</label>
+            <input type="text" name="name" value="<?php echo $doctor['name']; ?>" required>
+            <label>Email:</label>
+            <input type="email" name="email" value="<?php echo $doctor['email']; ?>" required>
+            <label>Password:</label>
+            <input type="password" name="password" value="<?php echo $doctor['password']; ?>" required>
+            <label>Speciality:</label>
+            <input type="text" name="speciality" value="<?php echo $doctor['speciality']; ?>" required>
+            <label>Phone:</label>
+            <input type="text" name="phone" value="<?php echo $doctor['phone']; ?>" required>
+            <label>Experience:</label>
+            <input type="text" name="experience" value="<?php echo $doctor['experience']; ?>" required>
+            <label>Max Patients:</label>
+            <input type="number" name="max_patients" value="<?php echo $doctor['max_patients']; ?>" required>
+            <button type="submit" name="update">Update Doctor</button>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {

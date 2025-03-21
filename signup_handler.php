@@ -3,10 +3,10 @@ include 'connection.php'; // Database connection file
 
 if (isset($_POST['signup'])) {
     $role = $_POST['role'];
+    $phone = $_POST['phone'];
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $phone = $_POST['phone'];
 
     // Validate phone number format
     if (!preg_match('/^\+91\d{10}$/', $phone)) {
@@ -23,8 +23,8 @@ if (isset($_POST['signup'])) {
         $speciality = $_POST['speciality'];
         $max_patients = $_POST['max_patients'];
         $role_id = 2;
-        $query = "INSERT INTO doctors (name, speciality, email, password, phone, role_id, max_patients, experience) 
-                  VALUES ('$name', '$speciality', '$email', '$password', '$phone', $role_id, '$max_patients', '$experience')";
+        $query = "INSERT INTO doctors (name, speciality, email, password, phone, role_id, max_patients) 
+                  VALUES ('$name', '$speciality', '$email', '$password', '$phone', $role_id, '$max_patients')";
     } elseif ($role === "Patient") {
         $age = $_POST['age'];
         $address = $_POST['address'];
@@ -37,6 +37,13 @@ if (isset($_POST['signup'])) {
     }
 
     if (mysqli_query($conn, $query)) {
+        // Get the last inserted doctor_id if the role is Doctor
+        if ($role === "Doctor") {
+            $doctor_id = mysqli_insert_id($conn);
+            session_start();
+            $_SESSION['doctor_id'] = $doctor_id; // Set doctor_id in session
+        }
+        
         echo "<script>
                 alert('Successfully registered! Please login.');
                 window.location.href = 'index.php';

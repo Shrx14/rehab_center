@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'connection.php';
+include 'connection.php'; // Database connection file
 
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
@@ -22,6 +22,8 @@ if (isset($_POST['login'])) {
     $result = mysqli_query($conn, $query);
 
     if (mysqli_num_rows($result) > 0) {
+        $doctor = mysqli_fetch_assoc($result);
+        $_SESSION['doctor_id'] = $doctor['doctor_id']; // Set doctor_id in session
         $_SESSION['role'] = 'Doctor';
         $_SESSION['email'] = $email;
         header("Location: doctor_dashboard.php");

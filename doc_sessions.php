@@ -34,7 +34,7 @@ $total_sessions = mysqli_fetch_assoc($session_count_result)['session_count'];
 
 // Fetch session details
 $sessions_query = "
-    SELECT a.appointment_id, a.appointment_date, a.appointment_time, p.name AS patient_name, p.email AS patient_email
+    SELECT a.appointment_id, a.appointment_date, a.appointment_time, p.name AS patient_name, p.email AS patient_email, a.status
     FROM appointments a
     JOIN patients p ON a.patient_id = p.patient_id
     WHERE a.doctor_id = '$doctor_id'
@@ -145,6 +145,7 @@ $sessions_result = mysqli_query($conn, $sessions_query);
                         <th>Email</th>
                         <th>Date</th>
                         <th>Time</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -159,7 +160,13 @@ $sessions_result = mysqli_query($conn, $sessions_query);
                             echo "<td>" . $session['patient_email'] . "</td>";
                             echo "<td>" . $session['appointment_date'] . "</td>";
                             echo "<td>" . $session['appointment_time'] . "</td>";
-                            echo "<td><a href='view_session_details.php?appointment_id=" . $session['appointment_id'] . "' class='btn btn-view-details'>View Details</a></td>";
+                            echo "<td>" . $session['status'] . "</td>";
+                            echo "<td>
+                                    <a href='view_session_details.php?appointment_id=" . $session['appointment_id'] . "' class='btn btn-view-details'>View Details</a>";
+                            if ($session['status'] == 'Scheduled') {
+                                echo "<a href='add_therapy_notes.php?appointment_id=" . $session['appointment_id'] . "' class='btn btn-primary'>Add Therapy Notes</a>";
+                            }
+                            echo "</td>";
                             echo "</tr>";
                         }
                     } else {

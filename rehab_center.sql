@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2025 at 10:26 AM
+-- Generation Time: Mar 21, 2025 at 01:54 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,15 +31,16 @@ CREATE TABLE `admin` (
   `admin_id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `email` varchar(100) NOT NULL
+  `email` varchar(100) NOT NULL,
+  `role_id` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`admin_id`, `username`, `password`, `email`) VALUES
-(1, 'admin1', 'admin1', 'admin1@rehab.com');
+INSERT INTO `admin` (`admin_id`, `username`, `password`, `email`, `role_id`) VALUES
+(1, 'admin1', 'admin1', 'admin1@rehab.com', 1);
 
 -- --------------------------------------------------------
 
@@ -89,21 +90,6 @@ INSERT INTO `appointments` (`appointment_id`, `patient_id`, `doctor_id`, `appoin
 -- --------------------------------------------------------
 
 --
--- Table structure for table `billing`
---
-
-CREATE TABLE `billing` (
-  `bill_id` int(11) NOT NULL,
-  `patient_id` int(11) DEFAULT NULL,
-  `doctor_id` int(11) DEFAULT NULL,
-  `amount` decimal(10,2) NOT NULL,
-  `payment_date` date DEFAULT NULL,
-  `payment_status` varchar(50) DEFAULT 'Unpaid'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `doctors`
 --
 
@@ -115,7 +101,6 @@ CREATE TABLE `doctors` (
   `password` varchar(255) NOT NULL,
   `phone` varchar(15) DEFAULT NULL,
   `experience` varchar(100) DEFAULT NULL,
-  `visit_days` varchar(100) DEFAULT NULL,
   `max_patients` int(11) NOT NULL,
   `role_id` int(11) DEFAULT NULL,
   `appointment_count` int(11) DEFAULT 0
@@ -125,28 +110,28 @@ CREATE TABLE `doctors` (
 -- Dumping data for table `doctors`
 --
 
-INSERT INTO `doctors` (`doctor_id`, `name`, `speciality`, `email`, `password`, `phone`, `experience`, `visit_days`, `max_patients`, `role_id`, `appointment_count`) VALUES
-(1, 'Dr. Amit S', 'Neurologist', 'amits1@rehab.com', 'amits1', '+91 9876543210', '5 years', 'Monday, Tuesday, Friday', 4, 2, 2),
-(2, 'Dr. John Doe', 'Cardiologist', 'johndoe@rehab.com', 'johndoc1', '+91 9123456781', '10 years', 'Monday, Wednesday, Friday', 6, 2, 0),
-(3, 'Dr. Sarah Lee', 'Orthopedic', 'sarahlee@rehab.com', 'sarahdoc1', '+91 9234567892', '8 years', 'Tuesday, Thursday, Saturday', 4, 2, 0),
-(4, 'Dr. Michael Brown', 'Dermatologist', 'michaelbrown@rehab.com', 'mikedoc1', '+91 9345678903', '12 years', 'Monday, Tuesday, Thursday', 5, 2, 0),
-(5, 'Dr. Emily Davis', 'Pediatrician', 'emilydavis@rehab.com', 'emilydoc1', '+91 9456789014', '7 years', 'Wednesday, Friday, Saturday', 6, 2, 0),
-(6, 'Dr. Liam White', 'Gastroenterologist', 'liamwhite@rehab.com', 'liamdoc1', '+91 9567890125', '9 years', 'Tuesday, Thursday, Friday', 5, 2, 0),
-(7, 'Dr. Sophia Green', 'Psychiatrist', 'sophiagreen@rehab.com', 'sophiadoc1', '+91 9678901236', '5 years', 'Monday, Wednesday, Friday', 4, 2, 0),
-(8, 'Dr. William Hall', 'Oncologist', 'williamhall@rehab.com', 'willdoc1', '+91 9789012347', '15 years', 'Monday, Tuesday, Friday', 8, 2, 1),
-(9, 'Dr. Olivia Scott', 'Neurologist', 'oliviascott@rehab.com', 'oliviadoc1', '+91 9890123458', '11 years', 'Tuesday, Thursday, Saturday', 5, 2, 1),
-(10, 'Dr. James Martinez', 'Endocrinologist', 'jamesmartinez@rehab.com', 'jamesdoc1', '+91 9901234569', '10 years', 'Wednesday, Friday, Saturday', 6, 2, 1),
-(11, 'Dr. Charlotte King', 'Urologist', 'charlotteking@rehab.com', 'charlottedoc1', '+91 9012345670', '6 years', 'Monday, Wednesday, Friday', 4, 2, 0),
-(12, 'Dr. Benjamin Lopez', 'Hematologist', 'benjaminlopez@rehab.com', 'benjamindoc1', '+91 9123456781', '8 years', 'Tuesday, Thursday, Saturday', 5, 2, 1),
-(13, 'Dr. Mia Clark', 'Radiologist', 'miaclark@rehab.com', 'miadoc1', '+91 9234567892', '7 years', 'Monday, Tuesday, Thursday', 5, 2, 0),
-(14, 'Dr. Elijah Walker', 'Pulmonologist', 'elijahwalker@rehab.com', 'elijahdoc1', '+91 9345678903', '9 years', 'Wednesday, Friday, Saturday', 6, 2, 1),
-(15, 'Dr. Abigail Adams', 'Nephrologist', 'abigailadams@rehab.com', 'abigaildoc1', '+91 9456789014', '10 years', 'Monday, Wednesday, Friday', 5, 2, 1),
-(16, 'Dr. Lucas Young', 'Ophthalmologist', 'lucasyoung@rehab.com', 'lucasdoc1', '+91 9567890125', '5 years', 'Tuesday, Thursday, Friday', 4, 2, 0),
-(17, 'Dr. Amelia Allen', 'Allergist', 'ameliaallen@rehab.com', 'ameliadoc1', '+91 9678901236', '12 years', 'Monday, Wednesday, Friday', 7, 2, 1),
-(18, 'Dr. Noah Harris', 'Rheumatologist', 'noahharris@rehab.com', 'noahdoc1', '+91 9789012347', '11 years', 'Tuesday, Thursday, Saturday', 5, 2, 1),
-(19, 'Dr. Isabella Hill', 'Surgeon', 'isabellahill@rehab.com', 'isabelladoc1', '+91 9890123458', '8 years', 'Wednesday, Friday, Saturday', 6, 2, 1),
-(20, 'Dr. Ethan Campbell', 'Pathologist', 'ethancampbell@rehab.com', 'ethandoc1', '+91 9901234569', '9 years', 'Monday, Tuesday, Thursday', 5, 2, 0),
-(22, 'Aryan M', 'Psychologist', 'aryanmdoc@rehab.com', '$2y$10$4tCDdCo2uqq/2ylvstnbtekeJtcuODGHQhaUn/Z4AhchRoZKcOBpK', '+919898982341', '4', 'Monday', 2, 2, 1);
+INSERT INTO `doctors` (`doctor_id`, `name`, `speciality`, `email`, `password`, `phone`, `experience`, `max_patients`, `role_id`, `appointment_count`) VALUES
+(1, 'Dr. Amit S', 'Neurologist', 'amits1@rehab.com', 'amits1', '+91 9876543210', '5 years', 4, 2, 2),
+(2, 'Dr. John Doe', 'Cardiologist', 'johndoe@rehab.com', 'johndoc1', '+91 9123456781', '10 years', 6, 2, 0),
+(3, 'Dr. Sarah Lee', 'Orthopedic', 'sarahlee@rehab.com', 'sarahdoc1', '+91 9234567892', '8 years', 4, 2, 0),
+(4, 'Dr. Michael Brown', 'Dermatologist', 'michaelbrown@rehab.com', 'mikedoc1', '+91 9345678903', '12 years', 5, 2, 0),
+(5, 'Dr. Emily Davis', 'Pediatrician', 'emilydavis@rehab.com', 'emilydoc1', '+91 9456789014', '7 years', 6, 2, 0),
+(6, 'Dr. Liam White', 'Gastroenterologist', 'liamwhite@rehab.com', 'liamdoc1', '+91 9567890125', '9 years', 5, 2, 0),
+(7, 'Dr. Sophia Green', 'Psychiatrist', 'sophiagreen@rehab.com', 'sophiadoc1', '+91 9678901236', '5 years', 4, 2, 0),
+(8, 'Dr. William Hall', 'Oncologist', 'williamhall@rehab.com', 'willdoc1', '+91 9789012347', '15 years', 8, 2, 1),
+(9, 'Dr. Olivia Scott', 'Neurologist', 'oliviascott@rehab.com', 'oliviadoc1', '+91 9890123458', '11 years', 5, 2, 1),
+(10, 'Dr. James Martinez', 'Endocrinologist', 'jamesmartinez@rehab.com', 'jamesdoc1', '+91 9901234569', '10 years', 6, 2, 1),
+(11, 'Dr. Charlotte King', 'Urologist', 'charlotteking@rehab.com', 'charlottedoc1', '+91 9012345670', '6 years', 4, 2, 0),
+(12, 'Dr. Benjamin Lopez', 'Hematologist', 'benjaminlopez@rehab.com', 'benjamindoc1', '+91 9123456781', '8 years', 5, 2, 1),
+(13, 'Dr. Mia Clark', 'Radiologist', 'miaclark@rehab.com', 'miadoc1', '+91 9234567892', '7 years', 5, 2, 0),
+(14, 'Dr. Elijah Walker', 'Pulmonologist', 'elijahwalker@rehab.com', 'elijahdoc1', '+91 9345678903', '9 years', 6, 2, 1),
+(15, 'Dr. Abigail Adams', 'Nephrologist', 'abigailadams@rehab.com', 'abigaildoc1', '+91 9456789014', '10 years', 5, 2, 1),
+(16, 'Dr. Lucas Young', 'Ophthalmologist', 'lucasyoung@rehab.com', 'lucasdoc1', '+91 9567890125', '5 years', 4, 2, 0),
+(17, 'Dr. Amelia Allen', 'Allergist', 'ameliaallen@rehab.com', 'ameliadoc1', '+91 9678901236', '12 years', 7, 2, 1),
+(18, 'Dr. Noah Harris', 'Rheumatologist', 'noahharris@rehab.com', 'noahdoc1', '+91 9789012347', '11 years', 5, 2, 1),
+(19, 'Dr. Isabella Hill', 'Surgeon', 'isabellahill@rehab.com', 'isabelladoc1', '+91 9890123458', '8 years', 6, 2, 1),
+(20, 'Dr. Ethan Campbell', 'Pathologist', 'ethancampbell@rehab.com', 'ethandoc1', '+91 9901234569', '9 years', 5, 2, 0),
+(22, 'Aryan M', 'Psychologist', 'aryanmdoc@rehab.com', '$2y$10$4tCDdCo2uqq/2ylvstnbtekeJtcuODGHQhaUn/Z4AhchRoZKcOBpK', '+919898982341', '4', 2, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -222,8 +207,9 @@ INSERT INTO `roles` (`role_id`, `role_name`) VALUES
 
 CREATE TABLE `therapy_sessions` (
   `session_id` int(11) NOT NULL,
-  `patient_id` int(11) DEFAULT NULL,
-  `doctor_id` int(11) DEFAULT NULL,
+  `patient_id` int(11) NOT NULL,
+  `doctor_id` int(11) NOT NULL,
+  `appointment_id` int(11) NOT NULL,
   `session_date` date NOT NULL,
   `progress_notes` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -232,15 +218,19 @@ CREATE TABLE `therapy_sessions` (
 -- Dumping data for table `therapy_sessions`
 --
 
-INSERT INTO `therapy_sessions` (`session_id`, `patient_id`, `doctor_id`, `session_date`, `progress_notes`) VALUES
-(1, 1, 1, '2025-01-22', 'Conducted cognitive behavioral therapy session.'),
-(2, 12, 1, '2025-01-03', 'Patient demonstrated progress in speech therapy.'),
-(3, 8, 3, '2025-01-05', 'Discussed pain management strategies with patient.'),
-(4, 13, 3, '2025-01-13', 'Conducted cognitive behavioral therapy session.'),
-(5, 18, 3, '2025-01-10', 'Discussed pain management strategies with patient.'),
-(6, 24, 9, '2025-01-04', 'Conducted cognitive behavioral therapy session.'),
-(7, 17, 8, '2025-01-25', 'Conducted cognitive behavioral therapy session.'),
-(8, 20, 10, '2025-01-03', 'Conducted cognitive behavioral therapy session.');
+INSERT INTO `therapy_sessions` (`session_id`, `patient_id`, `doctor_id`, `appointment_id`, `session_date`, `progress_notes`) VALUES
+(2, 12, 1, 12, '2025-01-03', 'Patient demonstrated progress in speech therapy.'),
+(3, 8, 3, 82, '2025-01-05', 'Discussed pain management strategies with patient.'),
+(5, 18, 3, 19, '2025-01-10', 'Discussed pain management strategies with patient.'),
+(6, 24, 9, 6, '2025-01-04', 'Conducted cognitive behavioral therapy session.'),
+(7, 17, 8, 17, '2025-01-25', 'Conducted cognitive behavioral therapy session.'),
+(9, 14, 1, 1, '2025-03-10', 'Follow-up therapy session for cognitive behavior improvement.'),
+(10, 8, 2, 2, '2025-03-11', 'Speech therapy session to improve communication skills.'),
+(11, 21, 3, 3, '2025-03-12', 'Physical therapy for motor skill recovery.'),
+(12, 12, 11, 12, '2025-03-21', 'Therapy session focused on rehabilitation progress.'),
+(13, 22, 16, 16, '2025-03-25', 'Session to track recovery post-surgery.'),
+(14, 19, 18, 18, '2025-03-28', 'Pain management and relaxation techniques discussed.'),
+(15, 19, 1, 83, '2025-03-15', 'Therapy to improve stress management and mental health.');
 
 --
 -- Indexes for dumped tables
@@ -252,21 +242,14 @@ INSERT INTO `therapy_sessions` (`session_id`, `patient_id`, `doctor_id`, `sessio
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`admin_id`),
   ADD UNIQUE KEY `username` (`username`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD KEY `fk_admin_role` (`role_id`);
 
 --
 -- Indexes for table `appointments`
 --
 ALTER TABLE `appointments`
   ADD PRIMARY KEY (`appointment_id`),
-  ADD KEY `patient_id` (`patient_id`),
-  ADD KEY `doctor_id` (`doctor_id`);
-
---
--- Indexes for table `billing`
---
-ALTER TABLE `billing`
-  ADD PRIMARY KEY (`bill_id`),
   ADD KEY `patient_id` (`patient_id`),
   ADD KEY `doctor_id` (`doctor_id`);
 
@@ -298,8 +281,9 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `therapy_sessions`
   ADD PRIMARY KEY (`session_id`),
-  ADD KEY `patient_id` (`patient_id`),
-  ADD KEY `doctor_id` (`doctor_id`);
+  ADD KEY `fk_therapy_patient` (`patient_id`),
+  ADD KEY `fk_therapy_doctor` (`doctor_id`),
+  ADD KEY `fk_therapy_appointment` (`appointment_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -316,12 +300,6 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `appointments`
   MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
-
---
--- AUTO_INCREMENT for table `billing`
---
-ALTER TABLE `billing`
-  MODIFY `bill_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `doctors`
@@ -352,18 +330,17 @@ ALTER TABLE `therapy_sessions`
 --
 
 --
+-- Constraints for table `admin`
+--
+ALTER TABLE `admin`
+  ADD CONSTRAINT `fk_admin_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `appointments`
 --
 ALTER TABLE `appointments`
   ADD CONSTRAINT `appointments_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`patient_id`),
   ADD CONSTRAINT `appointments_ibfk_2` FOREIGN KEY (`doctor_id`) REFERENCES `doctors` (`doctor_id`);
-
---
--- Constraints for table `billing`
---
-ALTER TABLE `billing`
-  ADD CONSTRAINT `billing_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`patient_id`),
-  ADD CONSTRAINT `billing_ibfk_2` FOREIGN KEY (`doctor_id`) REFERENCES `doctors` (`doctor_id`);
 
 --
 -- Constraints for table `doctors`
@@ -381,8 +358,9 @@ ALTER TABLE `patients`
 -- Constraints for table `therapy_sessions`
 --
 ALTER TABLE `therapy_sessions`
-  ADD CONSTRAINT `therapy_sessions_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`patient_id`),
-  ADD CONSTRAINT `therapy_sessions_ibfk_2` FOREIGN KEY (`doctor_id`) REFERENCES `doctors` (`doctor_id`);
+  ADD CONSTRAINT `fk_therapy_appointment` FOREIGN KEY (`appointment_id`) REFERENCES `appointments` (`appointment_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_therapy_doctor` FOREIGN KEY (`doctor_id`) REFERENCES `doctors` (`doctor_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_therapy_patient` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
