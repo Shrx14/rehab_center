@@ -1,18 +1,19 @@
 <?php
 session_start();
+include 'connection.php'; // Database connection file
 
 // Check if the user is logged in as Admin
-if ($_SESSION['role'] != 'Admin') {
-    header("Location: index.php");
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'Admin') {
+    header("Location: index.php"); // Redirect to login page if not an admin
     exit();
 }
 
-include 'connection.php';
-
-// Fetch all doctors from the database
-$doctors_query = "SELECT doctor_id, name, speciality, email, phone, experience, max_patients, appointment_count FROM doctors";
-
-$doctors_result = mysqli_query($conn, $doctors_query);
+// Fetch therapy sessions from the database
+$query = "SELECT ts.session_id, p.name AS patient_name, d.name AS doctor_name, ts.session_date, ts.progress_notes 
+          FROM therapy_sessions ts 
+          JOIN patients p ON ts.patient_id = p.patient_id 
+          JOIN doctors d ON ts.doctor_id = d.doctor_id"; 
+$result = mysqli_query($conn, $query);
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +21,7 @@ $doctors_result = mysqli_query($conn, $doctors_query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Doctors</title>
+    <title>Therapy Sessions</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
         body {
@@ -30,6 +31,8 @@ $doctors_result = mysqli_query($conn, $doctors_query);
             font-size: 18px;
             padding: 20px;
         }
+
+        /* Sidebar Styling */
         .sidebar {
             height: 100%;
             width: 240px;
@@ -57,13 +60,18 @@ $doctors_result = mysqli_query($conn, $doctors_query);
             border-radius: 6px;
             margin-bottom: 12px;
         }
+
         .sidebar a:hover {
             background-color: #495057;
         }
+
+        /* Main Content Styling */
         .main-content {
             margin-left: 280px;
             padding: 20px;
         }
+
+        /* Table Styling */
         .table-container {
             margin-top: 20px;
             background-color: white;
@@ -72,10 +80,17 @@ $doctors_result = mysqli_query($conn, $doctors_query);
             padding: 20px;
             overflow-x: auto;
         }
+
         .table {
             width: 100%;
             border-collapse: collapse;
         }
+
+        .table thead {
+            background-color: #007bff;
+            color: white;
+        }
+
         .table th, .table td {
             text-align: center;
             vertical-align: middle;
@@ -88,24 +103,27 @@ $doctors_result = mysqli_query($conn, $doctors_query);
             color: white;
             font-size: 17px;
         }
+
+        /* Buttons */
         .btn {
-            padding: 8px 12px;
-            font-size: 15px;
-            border-radius: 6px;
+            font-size: 16px;
+            padding: 10px 14px;
+            border-radius: 8px;
             border: none;
+            transition: 0.3s;
         }
-        .btn-view {
-            background-color: #85C1E9; /* Pastel Blue */
-            color: black;
-        }
+
         .btn-edit {
             background-color: #F9E79F; /* Pastel Yellow */
             color: black;
+            margin-right: 10px; /* Adds space between buttons */
         }
+
         .btn-remove {
             background-color: #F5B7B1; /* Pastel Red */
             color: black;
         }
+
         .btn:hover {
             filter: brightness(90%);
         }
@@ -126,12 +144,6 @@ $doctors_result = mysqli_query($conn, $doctors_query);
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        .add-doctor-box {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 250px;
         }
         .card {
             background-color: #ffffff;
@@ -160,7 +172,7 @@ $doctors_result = mysqli_query($conn, $doctors_query);
 </head>
 <body>
 
-    <!-- Sidebar -->
+    <!-- Main Content -->
     <div class="sidebar">
         <h4>Admin Dashboard</h4>
         <p><?php echo $_SESSION['email']; ?></p>
@@ -169,66 +181,58 @@ $doctors_result = mysqli_query($conn, $doctors_query);
         <a href="admin_dashboard.php?page=dashboard">Dashboard</a>
         <a href="all_doc.php">Doctors</a>
         <a href="all_patients.php">Patients</a>
-        <a href="all_sess.php">Sessions</a>
         <a href="all_therapy_sessions.php">Therapy Sessions</a>
+        <a href="all_sess.php">Sessions</a>
     </div>
 
-    <!-- Main Content -->
     <div class="main-content">
+
         <div class="top-bar">
-            <h3 style="font-size: 30px;">Manage Doctors</h3>
+            <h3 style="font-size: 30px;">Manage Therapy Sessions</h3>
         </div>
-           <!-- Box for Add New Patient -->
-<div class="add-doctor-box" style="margin-top: 40px;"> <!-- Adjusted margin to lower the box -->
+
+<div class="add-doctor-box"> <!-- Adjusted margin to lower the box -->
     <div class="card" style="background-color: #FAD7A0;"> <!-- Pastel color -->
         <div class="card-body text-center">
-            <a href="new_doc.php" class="btn btn-light" style="font-size: 18px; font-weight: bold;">+ Add New Doctor</a>
+            <a href="new_therapy_session.php" class="btn btn-light" style="font-size: 18px; font-weight: bold;">+ Add New Therapy Session</a>
         </div>
     </div>
 </div>
-
-        <!-- Doctors List -->
+        <!-- Therapy Sessions List -->
         <div class="table-container">
-            <div class="card-header">All Doctors</div>
+            <div class="card-header">Therapy Sessions</div>
             <table class="table">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>Session ID</th>
+                        <th>Patient Name</th>
                         <th>Doctor Name</th>
-                        <th>Specialty</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Experience</th>
-                        <th>Max Patients</th>
-                        <th>Appointment Count</th>
+                        <th>Session Date</th>
+                        <th>Progress Notes</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (mysqli_num_rows($doctors_result) > 0): ?>
-                        <?php $count = 1; while ($doctor = mysqli_fetch_assoc($doctors_result)): ?>
+                    <?php if (mysqli_num_rows($result) > 0): ?>
+                    <?php while ($session = mysqli_fetch_assoc($result)): ?>
+
                             <tr>
-                                <td><?php echo $count++; ?></td>
-                                <td><?php echo $doctor['name']; ?></td>
-                                <td><?php echo $doctor['speciality']; ?></td>
-                                <td><?php echo $doctor['email']; ?></td>
-                                <td><?php echo $doctor['phone']; ?></td>
-                                <td><?php echo $doctor['experience']; ?></td>
-                                <td><?php echo $doctor['max_patients']; ?></td>
-                                <td><?php echo $doctor['appointment_count']; ?></td>
+                                <td><?php echo $session['session_id']; ?></td>
+                                <td><?php echo $session['patient_name']; ?></td>
+                                <td><?php echo $session['doctor_name']; ?></td>
+                                <td><?php echo $session['session_date']; ?></td>
+                                <td><?php echo $session['progress_notes']; ?></td>
                                 <td>
                                     <div class="action-buttons">
-                                        <a href="view_doctor.php?email=<?php echo urlencode($doctor['email']); ?>" class="btn btn-view btn-sm">View</a>
-                                        <a href="edit_doctor.php?email=<?php echo urlencode($doctor['email']); ?>" class="btn btn-edit btn-sm">Edit</a>
-
-                                        <a href="delete_doctor.php?id=<?php echo $doctor['doctor_id']; ?>" class="btn btn-remove btn-sm" onclick="return confirm('Are you sure?');">Remove</a>
+                                        <a href="edit_therapy_session.php?id=<?php echo $session['session_id']; ?>" class="btn btn-edit btn-sm">Edit</a>
+                                        <a href="delete_therapy_session.php?id=<?php echo $session['session_id']; ?>" class="btn btn-remove btn-sm" onclick="return confirm('Are you sure you want to delete this session?');">Delete</a>
                                     </div>
                                 </td>
                             </tr>
-                        <?php endwhile; ?>
+                    <?php endwhile; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="7">No doctors found.</td>
+                            <td colspan="6">No therapy sessions found.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>

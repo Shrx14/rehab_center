@@ -193,6 +193,8 @@ $sessions_result = mysqli_query($conn, $sessions_query);
         <a href="all_doc.php" class="<?php echo ($page == 'all_doc') ? 'active' : ''; ?>">Doctors</a>
         <a href="all_patients.php" class="<?php echo ($page == 'all_patients') ? 'active': ''; ?>">Patients</a>
         <a href="all_sess.php" class="<?php echo ($page == 'all_sess') ? 'active' : ''; ?>">Sessions</a>
+        <a href="all_therapy_sessions.php">Therapy Sessions</a> <!-- New link added -->
+
     </div>
 
     <!-- Main Content -->

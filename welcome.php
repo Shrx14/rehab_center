@@ -16,11 +16,10 @@
             position: relative;
             text-align: center;
             color: white;
-        }
-        .header img {
-            width: 100%;
-            height: auto;
-            filter: brightness(40%);
+            background-image: url('Home.jpg');
+            background-size: cover; /* Ensures the image covers the header */
+            background-position: center; /* Centers the image */
+            height: 100vh; /* Sets the height of the header */
         }
         .header-content {
             position: absolute;
@@ -29,6 +28,8 @@
             transform: translate(-50%, -50%);
             text-align: center;
             width: 100%;
+            color: black; /* Changed to black for better visibility */
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7); /* Added text shadow */
         }
         .header-content h1 {
             font-size: 4.5rem;
@@ -98,15 +99,17 @@
             align-items: center;
             box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
             margin: 20px;
+            color: black; /* Changed to black for better visibility */
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7); /* Added text shadow */
         }
         .why-choose-us .point h3 {
             font-size: 1.5rem;
-            color: #007bff;
+            color:rgb(0, 0, 0);
             margin-bottom: 10px;
         }
         .why-choose-us .point p {
             font-size: 1rem;
-            color: #fff;
+            color: rgb(0, 0, 0);
             text-align: center;
         }
         .extra-section {
@@ -138,7 +141,6 @@
 </head>
 <body>
     <div class="header">
-        <img src="Home.jpg" alt="Rehab Center Image">
         <div class="header-content">
             <h1>Welcome to Rehab Center</h1>
             <p>Your journey to recovery starts here</p>

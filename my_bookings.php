@@ -178,7 +178,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         ?>
                         <option value="<?php echo $doctor['doctor_id']; ?>" 
                                 <?php echo ($availability) ? "disabled" : ""; ?>>
-                            Dr. <?php echo $doctor['name']; ?> - <?php echo $doctor['speciality']; ?> <?php echo $availability; ?>
+                             <?php echo $doctor['name']; ?> - <?php echo $doctor['speciality']; ?> <?php echo $availability; ?>
                         </option>
                     <?php endwhile; ?>
                 </select>

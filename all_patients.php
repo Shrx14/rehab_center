@@ -169,6 +169,7 @@ $patients_result = mysqli_query($conn, $patients_query);
         <a href="all_doc.php">Doctors</a>
         <a href="all_patients.php">Patients</a>
         <a href="all_sess.php">Sessions</a>
+        <a href="all_therapy_sessions.php">Therapy Sessions</a> <!-- New link added -->
     </div>
 
     <!-- Main Content -->
