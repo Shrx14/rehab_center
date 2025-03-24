@@ -101,7 +101,7 @@ $session_count = mysqli_fetch_assoc($session_count_result)['session_count'];
             border: none;
             border-radius: 12px;
             padding: 25px;
-            background-color: #ffffff;
+            background-color:rgb(150, 227, 199);
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
         }
         .card h5 {
@@ -178,15 +178,6 @@ $session_count = mysqli_fetch_assoc($session_count_result)['session_count'];
         <a href="all_sess.php">Sessions</a>
         <a href="all_therapy_sessions.php">Therapy Sessions</a> <!-- New link added -->
     </div>
-
-    <!-- Search Bar -->
-<div class="search-bar mb-4 d-flex justify-content-between align-items-center">
-    <form class="d-flex" action="search.php" method="GET">
-        <input class="form-control me-2" type="search" name="query" placeholder="Search..." aria-label="Search">
-        <button class="btn btn-outline-primary" type="submit">Search</button>
-    </form>
-</div>
-
 
     <!-- Main Content -->
     <div class="main-content">

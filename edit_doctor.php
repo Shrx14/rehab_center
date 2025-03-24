@@ -25,8 +25,13 @@ if (isset($_POST['update'])) {
     $experience = $_POST['experience'];
     $max_patients = $_POST['max_patients'];
 
-    $sql = "UPDATE doctors SET name='$name', email='$email', password='$password', speciality='$speciality', phone='$phone', experience='$experience', max_patients='$max_patients' WHERE doctor_id='$doctor_id'";
+    if (!empty($password)) {
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $sql = "UPDATE doctors SET name='$name', email='$email', password='$hashed_password', speciality='$speciality', phone='$phone', experience='$experience', max_patients='$max_patients' WHERE doctor_id='$doctor_id'";
 
+    } else {
+        $sql = "UPDATE doctors SET name='$name', email='$email', speciality='$speciality', phone='$phone', experience='$experience', max_patients='$max_patients' WHERE doctor_id='$doctor_id'";
+    }
     if (mysqli_query($conn, $sql)) {
         echo "<script>
                 alert('Doctor updated successfully!');
@@ -59,7 +64,8 @@ if (isset($_POST['update'])) {
             <label>Email:</label>
             <input type="email" name="email" value="<?php echo $doctor['email']; ?>" required>
             <label>Password:</label>
-            <input type="password" name="password" value="<?php echo $doctor['password']; ?>" required>
+            <input type="password" name="password" required>
+
             <label>Speciality:</label>
             <input type="text" name="speciality" value="<?php echo $doctor['speciality']; ?>" required>
             <label>Phone:</label>

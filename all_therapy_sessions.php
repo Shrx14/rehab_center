@@ -188,6 +188,8 @@ $result = mysqli_query($conn, $query);
     <div class="main-content">
 
         <div class="top-bar">
+
+
             <h3 style="font-size: 30px;">Manage Therapy Sessions</h3>
         </div>
 

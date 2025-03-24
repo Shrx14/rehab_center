@@ -175,17 +175,14 @@ $doctors_result = mysqli_query($conn, $doctors_query);
 
     <!-- Main Content -->
     <div class="main-content">
-        <div class="top-bar">
             <h3 style="font-size: 30px;">Manage Doctors</h3>
+        <div class="add-doctor-box" style="margin-top: 40px;"> <!-- Adjusted margin to lower the box -->
+            <div class="card" style="background-color: #FAD7A0;"> <!-- Pastel color -->
+                <div class="card-body text-center">
+                    <a href="new_doc.php" class="btn btn-light" style="font-size: 18px; font-weight: bold;">+ Add New Doctor</a>
+                </div>
+            </div>
         </div>
-           <!-- Box for Add New Patient -->
-<div class="add-doctor-box" style="margin-top: 40px;"> <!-- Adjusted margin to lower the box -->
-    <div class="card" style="background-color: #FAD7A0;"> <!-- Pastel color -->
-        <div class="card-body text-center">
-            <a href="new_doc.php" class="btn btn-light" style="font-size: 18px; font-weight: bold;">+ Add New Doctor</a>
-        </div>
-    </div>
-</div>
 
         <!-- Doctors List -->
         <div class="table-container">

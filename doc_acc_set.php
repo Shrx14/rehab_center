@@ -31,7 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Verify old password if new password is provided
     if (!empty($new_password) && empty($error)) {
-        if ($old_password !== $user['password']) {
+        if (!password_verify($old_password, $user['password'])) {
+
             $error = "Old password is incorrect";
         } else {
             $password = $new_password;
@@ -50,7 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
         // Only update password if a new one was provided
         if (!empty($new_password)) {
-            $update_query .= ", password = '$password'";
+            $update_query .= ", password = '" . password_hash($new_password, PASSWORD_DEFAULT) . "'";
+
         }
         
         $update_query .= " WHERE email = '$email'";

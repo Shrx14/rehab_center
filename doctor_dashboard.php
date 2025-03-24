@@ -141,13 +141,6 @@ $session_count = mysqli_fetch_assoc($todays_sessions_result)['session_count'];
 
     <!-- Main Content -->
     <div class="main-content">
-        <div class="search-bar">
-            <input type="text" placeholder="Search patients or sessions..." class="form-control">
-            <div class="current-date">
-                <?php echo date("l, d M Y"); // Display today's date ?>
-            </div>
-        </div>
-
         <!-- Welcome Section -->
         <div class="welcome-section">
             <h3>Welcome, <?php echo $doctor_name; ?>!</h3>

@@ -18,13 +18,17 @@ if (isset($_POST['signup'])) {
     }
 
     if ($role === "Admin") {
-        $query = "INSERT INTO admin (username, password, email) VALUES ('$name', '$password', '$email')";
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $query = "INSERT INTO admin (username, password, email) VALUES ('$name', '$hashed_password', '$email')";
+
     } elseif ($role === "Doctor") {
         $speciality = $_POST['speciality'];
         $max_patients = $_POST['max_patients'];
         $role_id = 2;
-        $query = "INSERT INTO doctors (name, speciality, email, password, phone, role_id, max_patients) 
-                  VALUES ('$name', '$speciality', '$email', '$password', '$phone', $role_id, '$max_patients')";
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $query = "INSERT INTO doctors (name, speciality, email, password, phone, role_id, max_patients) 
+                  VALUES ('$name', '$speciality', '$email', '$hashed_password', '$phone', $role_id, '$max_patients')";
+
     } elseif ($role === "Patient") {
         $age = $_POST['age'];
         $address = $_POST['address'];
@@ -32,8 +36,10 @@ if (isset($_POST['signup'])) {
         $admitted_date = $_POST['admitted_date'];
         $surgery_status = $_POST['surgery_status'];
         $role_id = 3;
-        $query = "INSERT INTO patients (name, email, password, phone, role_id, age, address, diagnosis_type, admitted_date, surgery_status) 
-                  VALUES ('$name', '$email', '$password', '$phone', $role_id, '$age', '$address', '$diagnosis_type', '$admitted_date', '$surgery_status')";
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $query = "INSERT INTO patients (name, email, password, phone, role_id, age, address, diagnosis_type, admitted_date, surgery_status) 
+                  VALUES ('$name', '$email', '$hashed_password', '$phone', $role_id, '$age', '$address', '$diagnosis_type', '$admitted_date', '$surgery_status')";
+
     }
 
     if (mysqli_query($conn, $query)) {

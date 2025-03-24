@@ -200,6 +200,8 @@ $sessions_result = mysqli_query($conn, $sessions_query);
     <!-- Main Content -->
     <div class="main-content">
         <div class="top-bar">
+
+
             <h3 style="font-size: 30px;">All Appointments</h3>
         </div>
 

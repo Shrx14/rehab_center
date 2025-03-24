@@ -12,9 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $delete_query = "DELETE FROM doctors WHERE email = '$email'";
 
     if (mysqli_query($conn, $delete_query)) {
-        session_destroy();
-        header("Location: goodbye.php");
+        echo "<h2 style='padding: 8px 12px; font-size:15px; border-radius:6px; border:none; background-color: #85C1E9;color: black;' >Your account has been deleted successfully.</h3>";
+        echo "<a href='welcome.php' class='btn btn-view btn-sm' style='padding: 8px 12px; font-size:15px; border-radius:6px; border:none; background-color: #85C1E9;color: black;'>Go to Welcome Page</a>";
+
         exit();
+
+
     } else {
         $error = "Failed to delete account.";
     }

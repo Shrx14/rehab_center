@@ -34,7 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Verify old password if new password is provided
     if (!empty($new_password) && empty($error)) {
-        if ($old_password !== $user['password']) {
+        if (!password_verify($old_password, $user['password'])) {
+
             $error = "Old password is incorrect";
         } else {
             $password = $new_password;
@@ -55,7 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 diagnosis_type = '$diagnosis_type', 
                 admitted_date = '$admitted_date', 
                 Surgery_status = '$surgery_status', 
-                password = '$password' 
+                password = '" . password_hash($new_password, PASSWORD_DEFAULT) . "' 
+
             WHERE email = '$email'";
 
         if (mysqli_query($conn, $update_query)) {

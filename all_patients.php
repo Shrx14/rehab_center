@@ -175,6 +175,8 @@ $patients_result = mysqli_query($conn, $patients_query);
     <!-- Main Content -->
     <div class="main-content">
         <div class="top-bar">
+
+
             <h3 style="font-size: 30px;">Manage Patients</h3>
         </div>
 
