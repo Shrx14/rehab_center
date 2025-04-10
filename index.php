@@ -77,7 +77,7 @@
         <button class="btn btn-custom btn-custom-primary" data-toggle="modal" data-target="#loginModal">Login</button>
     </div>
     <footer>
-        <p>&copy; 2024 Rehab Center. All Rights Reserved.</p>
+        <p>&copy; 2025 Rehab Center. All Rights Reserved.</p>
     </footer>
 
     <!-- Login Modal -->
