@@ -98,8 +98,24 @@
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
+                            <div class="password-input">
+                                <input type="password" class="form-control" id="password" name="password" required>
+                                <i class="fas fa-eye password-toggle" style="position: absolute; right: 25px; top: 38px; cursor: pointer;"></i>
+                            </div>
                         </div>
+                        <script>
+                            document.querySelector('.password-toggle').addEventListener('click', function() {
+                                const passwordInput = document.getElementById('password');
+                                const icon = this;
+                                if (passwordInput.type === 'password') {
+                                    passwordInput.type = 'text';
+                                    icon.classList.replace('fa-eye', 'fa-eye-slash');
+                                } else {
+                                    passwordInput.type = 'password';
+                                    icon.classList.replace('fa-eye-slash', 'fa-eye');
+                                }
+                            });
+                        </script>
                         <button type="submit" name="login" class="btn btn-primary btn-block">Login</button>
                         <div class="text-center mt-3">
                             <p>Don't have an account? <a href="signup.php">Sign Up</a></p>

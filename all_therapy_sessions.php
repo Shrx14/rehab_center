@@ -181,8 +181,8 @@ $result = mysqli_query($conn, $query);
         <a href="admin_dashboard.php?page=dashboard">Dashboard</a>
         <a href="all_doc.php">Doctors</a>
         <a href="all_patients.php">Patients</a>
-        <a href="all_therapy_sessions.php">Therapy Sessions</a>
         <a href="all_sess.php">Sessions</a>
+        <a href="all_therapy_sessions.php">Therapy Sessions</a>
     </div>
 
     <div class="main-content">
