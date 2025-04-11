@@ -125,7 +125,11 @@
                         <label for="admitted_date">Date of Patient Admission</label>
                         <input type="date" name="admitted_date" class="form-control" placeholder="Enter your admission date">
                         <label for="surgery_status">Surgery Status</label>
-                        <input type="text" name="surgery_status" class="form-control" placeholder="Enter your surgery status(if applicable)">
+                        <select name="surgery_status" class="form-control">
+                        <option value="Not Required" <?php echo (empty($patient['Surgery_status']) || $patient['Surgery_status'] == 'Not Required') ? 'selected' : ''; ?>>Not Required</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Pending">Pending</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone Number (with country code +91)</label>

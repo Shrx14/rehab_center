@@ -76,7 +76,7 @@ $doctor = mysqli_fetch_assoc($doctor_result);
 <body>
 
     <div class="main-content">
-        <h2>Contact Information for Dr. <?php echo $doctor['name']; ?></h2>
+        <h2>Contact Information for <?php echo $doctor['name']; ?></h2>
         <p>Email: <?php echo $doctor['email']; ?></p>
         <p>Phone: <?php echo $doctor['phone']; ?></p>
     </div>

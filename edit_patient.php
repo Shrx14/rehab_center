@@ -177,7 +177,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="form-group">
                 <label for="surgery_status">Surgery Status</label>
-                <input type="text" id="surgery_status" name="surgery_status" class="form-control" value="<?php echo htmlspecialchars($patient['Surgery_status']); ?>" >
+                <select id="surgery_status" name="surgery_status" class="form-control">
+                    <option value="Not Required" <?php echo (empty($patient['Surgery_status']) || $patient['Surgery_status'] == 'Not Required') ? 'selected' : ''; ?>>Not Required</option>
+                    <option value="Completed" <?php echo ($patient['Surgery_status'] == 'Completed') ? 'selected' : ''; ?>>Completed</option>
+                    <option value="Pending" <?php echo ($patient['Surgery_status'] == 'Pending') ? 'selected' : ''; ?>>Pending</option>
+                </select>
             </div>
             <button type="submit" class="btn btn-primary">Update Patient</button>
         </form>

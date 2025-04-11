@@ -214,7 +214,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="form-group">
                 <label for="surgery_status">Surgery Status</label>
-                <input type="text" id="surgery_status" name="surgery_status" class="form-control" value="<?php echo htmlspecialchars($user['Surgery_status']); ?>" required>
+                <select id="surgery_status" name="surgery_status" class="form-control" required>
+                    <option value="Not Required" <?php echo (empty($user['Surgery_status']) || $user['Surgery_status'] == 'Not Required') ? 'selected' : ''; ?>>Not Required</option>
+                    <option value="Completed" <?php echo ($user['Surgery_status'] == 'Completed') ? 'selected' : ''; ?>>Completed</option>
+                    <option value="Pending" <?php echo ($user['Surgery_status'] == 'Pending') ? 'selected' : ''; ?>>Pending</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="old_password">Old Password (Required for password change)</label>

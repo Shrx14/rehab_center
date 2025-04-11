@@ -93,7 +93,7 @@ if (mysqli_num_rows($result) > 0) {
             color: #0056b3;
             transform: translateY(20px);
             opacity: 0;
-            animation: slideInUp 0.5s ease-out 0.2s forwards;
+            animation: slideInUp 0.5s ease-out forwards;
         }
         .card {
             border: none;
@@ -105,9 +105,8 @@ if (mysqli_num_rows($result) > 0) {
             opacity: 0;
             animation: slideInUp 0.5s ease-out forwards;
         }
-        .card:nth-child(1) { animation-delay: 0.3s; }
-        .card:nth-child(2) { animation-delay: 0.4s; }
-        .card:nth-child(3) { animation-delay: 0.5s; }
+
+
         .card-body {
             padding: 20px;
         }

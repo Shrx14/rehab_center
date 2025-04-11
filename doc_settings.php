@@ -97,9 +97,7 @@ if (mysqli_num_rows($result) > 0) {
             opacity: 0;
             animation: slideInUp 0.5s ease-out forwards;
         }
-        .card:nth-child(1) { animation-delay: 0.2s; }
-        .card:nth-child(2) { animation-delay: 0.3s; }
-        .card:nth-child(3) { animation-delay: 0.4s; }
+
         .card-header {
             background-color: #ffffff;
             border-bottom: 1px solid #e9ecef;
