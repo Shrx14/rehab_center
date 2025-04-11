@@ -28,6 +28,7 @@ $patients_result = mysqli_query($conn, $patients_query);
             color: #333;
             font-size: 18px;
             padding: 20px;
+            scroll-behavior: smooth;
         }
         .sidebar {
             height: 100%;
@@ -38,6 +39,7 @@ $patients_result = mysqli_query($conn, $patients_query);
             background-color: #343a40;
             padding: 25px;
             color: white;
+            animation: fadeIn 0.8s ease-out;
         }
         .sidebar h4 {
             text-align: center;
@@ -55,7 +57,15 @@ $patients_result = mysqli_query($conn, $patients_query);
             display: block;
             border-radius: 6px;
             margin-bottom: 12px;
+            transform: translateX(-20px);
+            opacity: 0;
+            animation: slideInLeft 0.5s ease-out forwards;
         }
+        .sidebar a:nth-child(1) { animation-delay: 0.2s; }
+        .sidebar a:nth-child(2) { animation-delay: 0.3s; }
+        .sidebar a:nth-child(3) { animation-delay: 0.4s; }
+        .sidebar a:nth-child(4) { animation-delay: 0.5s; }
+        .sidebar a:nth-child(5) { animation-delay: 0.6s; }
         .sidebar a:hover {
             background-color: #495057;
         }
@@ -70,6 +80,9 @@ $patients_result = mysqli_query($conn, $patients_query);
             overflow: hidden;
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
             padding: 20px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.4s forwards;
         }
         .table {
             width: 100%;
@@ -92,6 +105,28 @@ $patients_result = mysqli_query($conn, $patients_query);
             font-size: 16px;
             border-radius: 6px;
             border: none;
+            transition: all 0.3s ease;
+            transform: scale(1);
+        }
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
         .btn-view {
             background-color: #85C1E9; /* Pastel Blue */
@@ -107,6 +142,7 @@ $patients_result = mysqli_query($conn, $patients_query);
         }
         .btn:hover {
             filter: brightness(90%);
+            transform: scale(1.05);
         }
         .action-buttons {
             display: flex;
@@ -131,6 +167,8 @@ $patients_result = mysqli_query($conn, $patients_query);
             top: 20px;
             right: 20px;
             width: 250px;
+            animation: slideInRight 0.8s ease-out 0.6s;
+            animation-fill-mode: both;
         }
         .card {
             background-color: #ffffff;
@@ -174,6 +212,13 @@ $patients_result = mysqli_query($conn, $patients_query);
 
     <!-- Main Content -->
     <div class="main-content">
+        <?php if (isset($_GET['alert']) && isset($_GET['message'])): ?>
+            <div class="alert alert-<?php echo $_GET['alert'] === 'success' ? 'success' : 'danger'; ?> alert-dismissible fade show" role="alert">
+                <?php echo urldecode($_GET['message']); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+        
         <div class="top-bar">
 
 

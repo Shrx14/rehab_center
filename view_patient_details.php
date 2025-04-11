@@ -50,6 +50,27 @@ $therapy_result = mysqli_query($conn, $therapy_query);
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             color: #333;
+            scroll-behavior: smooth;
+        }
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
         .container {
             max-width: 1200px;
@@ -58,6 +79,9 @@ $therapy_result = mysqli_query($conn, $therapy_query);
             background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.3s forwards;
         }
         h2 {
             text-align: center;
@@ -94,7 +118,15 @@ $therapy_result = mysqli_query($conn, $therapy_query);
         .alert {
             margin-top: 20px;
             border-radius: 8px;
+            animation: slideInLeft 0.5s ease-out;
         }
+        .info-section, .appointments, .therapy-sessions {
+            animation: slideInLeft 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+        .info-section { animation-delay: 0.2s; }
+        .appointments { animation-delay: 0.3s; }
+        .therapy-sessions { animation-delay: 0.4s; }
     </style>
 </head>
 <body>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+include 'connection.php';
 
 // Check if the user is logged in as Admin
 if ($_SESSION['role'] != 'Admin') {
@@ -7,41 +8,72 @@ if ($_SESSION['role'] != 'Admin') {
     exit();
 }
 
-include 'connection.php';
-
-if (isset($_GET['id'])) {
-    $doctor_id = $_GET['id'];
-    $sql = "SELECT * FROM doctors WHERE doctor_id='$doctor_id'";
-    $result = mysqli_query($conn, $sql);
-    $doctor = mysqli_fetch_assoc($result);
+// Check if email parameter is set
+if (!isset($_GET['email'])) {
+    header("Location: all_doc.php");
+    exit();
 }
 
-if (isset($_POST['update'])) {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
+$email = urldecode($_GET['email']);
+$query = "SELECT * FROM doctors WHERE email = '$email'";
+$result = mysqli_query($conn, $query);
+$doctor = mysqli_fetch_assoc($result);
+
+if (!$doctor) {
+    header("Location: all_doc.php?error=Doctor not found");
+    exit();
+}
+
+$success = '';
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = $_POST['password'];
-    $speciality = $_POST['speciality'];
-    $phone = $_POST['phone'];
-    $experience = $_POST['experience'];
-    $max_patients = $_POST['max_patients'];
+    $speciality = mysqli_real_escape_string($conn, $_POST['speciality']);
+    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
+    $experience = mysqli_real_escape_string($conn, $_POST['experience']);
+    $max_patients = (int)$_POST['max_patients'];
 
-    if (!empty($password)) {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "UPDATE doctors SET name='$name', email='$email', password='$hashed_password', speciality='$speciality', phone='$phone', experience='$experience', max_patients='$max_patients' WHERE doctor_id='$doctor_id'";
-
-    } else {
-        $sql = "UPDATE doctors SET name='$name', email='$email', speciality='$speciality', phone='$phone', experience='$experience', max_patients='$max_patients' WHERE doctor_id='$doctor_id'";
+    // Validate phone number format
+    if (!preg_match('/^\+91\d{10}$/', $phone)) {
+        $error = "Invalid phone number. Please enter a valid Indian phone number with country code +91 followed by 10 digits.";
     }
-    if (mysqli_query($conn, $sql)) {
-        echo "<script>
-                alert('Doctor updated successfully!');
-                window.location.href = 'all_doc.php';
-              </script>";
-    } else {
-        echo "<script>
-                alert('Error: " . mysqli_error($conn) . "');
-                window.history.back();
-              </script>";
+
+    if (empty($error)) {
+        if (!empty($password)) {
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $update_query = "
+            UPDATE doctors 
+            SET 
+                    name = '$name', 
+                    email = '$email', 
+                    password = '$hashed_password', 
+                    speciality = '$speciality', 
+                    phone = '$phone', 
+                    experience = '$experience', 
+                    max_patients = $max_patients 
+                WHERE email = '$email'";
+        } else {
+            $update_query = "
+                UPDATE doctors 
+                SET 
+                    name = '$name', 
+                    email = '$email', 
+                    speciality = '$speciality', 
+                    phone = '$phone', 
+                    experience = '$experience', 
+                    max_patients = $max_patients 
+                WHERE email = '$email'";
+        }
+
+        if (mysqli_query($conn, $update_query)) {
+            $success = "Doctor details updated successfully.";
+            header("Refresh: 2; url=all_doc.php");
+        } else {
+            $error = "Failed to update doctor: " . mysqli_error($conn);
+        }
     }
 }
 ?>
@@ -52,29 +84,6 @@ if (isset($_POST['update'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Doctor</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Keep the existing CSS file -->
-</head>
-<body>
-    <div class="container">
-        <h1>Edit Doctor</h1>
-        <form method="POST" action="">
-            <input type="hidden" name="doctor_id" value="<?php echo $doctor['doctor_id']; ?>">
-            <label>Name:</label>
-            <input type="text" name="name" value="<?php echo $doctor['name']; ?>" required>
-            <label>Email:</label>
-            <input type="email" name="email" value="<?php echo $doctor['email']; ?>" required>
-            <label>Password:</label>
-            <input type="password" name="password" required>
-
-            <label>Speciality:</label>
-            <input type="text" name="speciality" value="<?php echo $doctor['speciality']; ?>" required>
-            <label>Phone:</label>
-            <input type="text" name="phone" value="<?php echo $doctor['phone']; ?>" required>
-            <label>Experience:</label>
-            <input type="text" name="experience" value="<?php echo $doctor['experience']; ?>" required>
-            <label>Max Patients:</label>
-            <input type="number" name="max_patients" value="<?php echo $doctor['max_patients']; ?>" required>
-            <button type="submit" name="update">Update Doctor</button>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -87,7 +96,7 @@ if (isset($_POST['update'])) {
             margin: 50px auto;
             padding: 20px;
             background-color: #ffffff;
-            border-radius: 8px;
+            border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         h2 {
@@ -95,33 +104,28 @@ if (isset($_POST['update'])) {
             margin-bottom: 30px;
             color: #0056b3;
         }
-        .form-group label {
-            font-weight: bold;
-            color: #2c3e50;
+        .form-group {
+            margin-bottom: 20px;
         }
         .form-control {
-            border-radius: 8px;
+            width: 100%;
+            padding: 10px;
             border: 1px solid #e9ecef;
-            padding: 12px;
-            font-size: 16px;
-            margin-bottom: 15px;
+            border-radius: 8px;
         }
         .btn-primary {
             width: 100%;
-            margin-top: 20px;
             padding: 12px;
             background-color: #007bff;
             border: none;
             border-radius: 8px;
-            font-size: 18px;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
+            cursor: pointer;
         }
         .btn-primary:hover {
             background-color: #0056b3;
         }
         .alert {
-            margin-bottom: 20px;
+            margin-top: 20px;
             border-radius: 8px;
         }
         .error {
@@ -153,33 +157,37 @@ if (isset($_POST['update'])) {
 
         <form method="POST" onsubmit="return validatePhone()">
             <div class="form-group">
-                <label>Name</label>
-                <input type="text" name="name" class="form-control" value="<?php echo htmlspecialchars($doctor['name']); ?>" required>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars($doctor['name']); ?>" required>
             </div>
             <div class="form-group">
-                <label>Email</label>
-                <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($doctor['email']); ?>" readonly>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-control" value="<?php echo htmlspecialchars($doctor['email']); ?>" readonly>
             </div>
             <div class="form-group">
-                <label>Phone Number (with country code +91)</label>
-                <input type="text" name="phone" id="phone" class="form-control" value="<?php echo htmlspecialchars($doctor['phone']); ?>" required>
+                <label for="phone">Phone Number (with country code +91)</label>
+                <input type="text" id="phone" name="phone" class="form-control" value="<?php echo htmlspecialchars($doctor['phone']); ?>" required>
                 <div id="phoneError" class="error"></div>
             </div>
             <div class="form-group">
-                <label>Specialty</label>
-                <input type="text" name="speciality" class="form-control" value="<?php echo htmlspecialchars($doctor['speciality']); ?>" required>
+                <label for="speciality">Specialty</label>
+                <input type="text" id="speciality" name="speciality" class="form-control" value="<?php echo htmlspecialchars($doctor['speciality']); ?>" required>
             </div>
             <div class="form-group">
-                <label>Experience</label>
-                <input type="text" name="experience" class="form-control" value="<?php echo htmlspecialchars($doctor['experience']); ?>" required>
+                <label for="experience">Experience (years)</label>
+                <input type="text" id="experience" name="experience" class="form-control" value="<?php echo htmlspecialchars($doctor['experience']); ?>" required>
             </div>
             <div class="form-group">
-                <label>Maximum Patients</label>
-                <input type="number" name="max_patients" class="form-control" value="<?php echo htmlspecialchars($doctor['max_patients']); ?>" required>
+                <label for="max_patients">Maximum Patients</label>
+                <input type="number" id="max_patients" name="max_patients" class="form-control" value="<?php echo htmlspecialchars($doctor['max_patients']); ?>" required>
             </div>
             <div class="form-group">
-                <label>Current Scheduled Appointments</label>
-                <input type="number" name="appointment_count" class="form-control" value="<?php echo htmlspecialchars($doctor['appointment_count']); ?>" required>
+                <label for="appointment_count">Current Scheduled Appointments</label>
+                <input type="number" id="appointment_count" name="appointment_count" class="form-control" value="<?php echo htmlspecialchars($doctor['appointment_count']); ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="password">New Password (leave blank to keep current)</label>
+                <input type="password" id="password" name="password" class="form-control">
             </div>
             <button type="submit" class="btn btn-primary">Update Doctor</button>
         </form>

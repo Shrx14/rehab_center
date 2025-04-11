@@ -27,7 +27,7 @@ if (isset($_POST['signup'])) {
         $role_id = 2;
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     $query = "INSERT INTO doctors (name, speciality, email, password, phone, role_id, max_patients) 
-                  VALUES ('$name', '$speciality', '$email', '$hashed_password', '$phone', $role_id, '$max_patients')";
+                  VALUES ('Dr. $name', '$speciality', '$email', '$hashed_password', '$phone', $role_id, '$max_patients')";
 
     } elseif ($role === "Patient") {
         $age = $_POST['age'];

@@ -55,6 +55,27 @@ $session_count = mysqli_fetch_assoc($todays_sessions_result)['session_count'];
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             color: #333;
+            scroll-behavior: smooth;
+        }
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
         .sidebar {
             height: 100%;
@@ -82,6 +103,7 @@ $session_count = mysqli_fetch_assoc($todays_sessions_result)['session_count'];
         .main-content {
             margin-left: 250px;
             padding: 20px;
+            animation: slideInUp 0.5s ease-out;
         }
         .welcome-section {
             margin-bottom: 30px;
@@ -89,6 +111,9 @@ $session_count = mysqli_fetch_assoc($todays_sessions_result)['session_count'];
             background-color: #007bff;
             color: white;
             border-radius: 10px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.2s forwards;
         }
         .dashboard-grid {
             display: grid;
@@ -101,7 +126,13 @@ $session_count = mysqli_fetch_assoc($todays_sessions_result)['session_count'];
             padding: 20px;
             background-color: #ffffff;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out forwards;
         }
+        .card:nth-child(1) { animation-delay: 0.3s; }
+        .card:nth-child(2) { animation-delay: 0.4s; }
+        .card:nth-child(3) { animation-delay: 0.5s; }
         .card h5 {
             margin-bottom: 15px;
             font-weight: bold;

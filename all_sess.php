@@ -41,6 +41,7 @@ $sessions_result = mysqli_query($conn, $sessions_query);
             color: #333;
             font-size: 18px;
             padding: 20px;
+            scroll-behavior: smooth;
         }
 
         /* Sidebar Styling */
@@ -53,6 +54,7 @@ $sessions_result = mysqli_query($conn, $sessions_query);
             background-color: #343a40;
             padding: 25px;
             color: white;
+            animation: fadeIn 0.8s ease-out;
         }
         .sidebar h4 {
             text-align: center;
@@ -70,7 +72,15 @@ $sessions_result = mysqli_query($conn, $sessions_query);
             display: block;
             border-radius: 6px;
             margin-bottom: 12px;
+            transform: translateX(-20px);
+            opacity: 0;
+            animation: slideInLeft 0.5s ease-out forwards;
         }
+        .sidebar a:nth-child(1) { animation-delay: 0.2s; }
+        .sidebar a:nth-child(2) { animation-delay: 0.3s; }
+        .sidebar a:nth-child(3) { animation-delay: 0.4s; }
+        .sidebar a:nth-child(4) { animation-delay: 0.5s; }
+        .sidebar a:nth-child(5) { animation-delay: 0.6s; }
 
         .sidebar a:hover {
             background-color: #495057;
@@ -90,6 +100,9 @@ $sessions_result = mysqli_query($conn, $sessions_query);
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
             padding: 20px;
             overflow-x: auto;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.4s forwards;
         }
 
         .table {
@@ -121,7 +134,28 @@ $sessions_result = mysqli_query($conn, $sessions_query);
             padding: 10px 14px;
             border-radius: 8px;
             border: none;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            transform: scale(1);
+        }
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         .btn-edit {
@@ -137,6 +171,7 @@ $sessions_result = mysqli_query($conn, $sessions_query);
 
         .btn:hover {
             filter: brightness(90%);
+            transform: scale(1.05);
         }
         .action-buttons {
             display: flex;

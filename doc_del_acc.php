@@ -12,8 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $delete_query = "DELETE FROM doctors WHERE email = '$email'";
 
     if (mysqli_query($conn, $delete_query)) {
-        echo "<h2 style='padding: 8px 12px; font-size:15px; border-radius:6px; border:none; background-color: #85C1E9;color: black;' >Your account has been deleted successfully.</h3>";
-        echo "<a href='welcome.php' class='btn btn-view btn-sm' style='padding: 8px 12px; font-size:15px; border-radius:6px; border:none; background-color: #85C1E9;color: black;'>Go to Welcome Page</a>";
+        echo "<div class='container' style='text-align: center;'>";
+        echo "<h2 style='color: #28a745; margin-bottom: 20px;'>Your account has been deleted successfully</h2>";
+        echo "<a href='welcome.php' class='btn btn-success' style='padding: 10px 20px;'>Go to Welcome Page</a>";
+        echo "</div>";
 
         exit();
 
@@ -36,24 +38,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             color: #333;
+            scroll-behavior: smooth;
+        }
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         .container {
             max-width: 800px;
             margin: 50px auto;
-            padding: 20px;
+            padding: 30px;
             background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out forwards;
         }
         h2 {
             text-align: center;
             margin-bottom: 30px;
             color: #dc3545;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f8d7da;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.2s forwards;
         }
         p {
             font-size: 18px;
             margin-bottom: 30px;
             text-align: center;
+            color: #dc3545;
+            font-weight: bold;
+            animation: fadeIn 0.8s ease-out 0.3s forwards;
+            opacity: 0;
         }
         .btn-danger {
             width: 100%;
@@ -61,7 +90,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 18px;
             font-weight: 500;
             border-radius: 8px;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.3s forwards;
         }
         .btn-danger:hover {
             background-color: #c82333;

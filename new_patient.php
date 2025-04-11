@@ -40,26 +40,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
         body {
-    background-color: #f8f9fa;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;  /* Add this line to ensure vertical centering */
-}
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
         .container {
             width: 100%;
             max-width: 800px;
             padding: 40px;
             background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out forwards;
+            border: 1px solid rgba(0,0,0,0.05);
         }
         h3 {
             text-align: center;
             margin-bottom: 30px;
             color: #007bff;
-            font-size: 30px;
+            font-size: 28px;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.2s forwards;
         }
         .form-label {
             font-weight: bold;
@@ -67,19 +91,55 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         .btn-primary, .btn-secondary {
             width: 100%;
-            padding: 15px;
-            font-size: 1.1rem;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.3s forwards;
+            border-radius: 8px;
+        }
+        .btn-primary:hover, .btn-secondary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .btn-secondary {
+            margin-top: 12px;
+            background-color: #f8f9fa;
+            color: #495057;
+            border: 1px solid #e0e0e0;
         }
         .form-control {
             border-radius: 8px;
-            padding: 10px;
-            font-size: 1.1rem;
+            padding: 14px 16px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            background-color: #fcfcfc;
+        }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.1rem rgba(0,123,255,.15);
+            background-color: white;
         }
         .form-group {
             margin-bottom: 25px;
         }
         .alert {
             margin-bottom: 20px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 0.3s forwards;
+        }
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .button-group .btn {
+            width: 100%;
         }
     </style>
 </head>
@@ -136,8 +196,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
             </div>
 
-            <button type="submit" class="btn btn-primary">Add Patient</button>
-            <a href="all_patients.php" class="btn btn-secondary">Cancel</a>
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary">Add Patient</button>
+                <button type="button" onclick="window.location.href='all_patients.php'" class="btn btn-secondary">Cancel</button>
+            </div>
         </form>
     </div>
 </body>

@@ -29,9 +29,72 @@ $patient = mysqli_fetch_assoc($patient_result);
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             color: #333;
+            scroll-behavior: smooth;
+        }
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
         .main-content {
-            margin: 20px;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: slideInUp 0.5s ease-out;
+        }
+        h2 {
+            color: #007bff;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e9ecef;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.2s forwards;
+        }
+        .contact-info {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .contact-info p {
+            font-size: 18px;
+            margin-bottom: 10px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out forwards;
+        }
+        .contact-info p:nth-child(1) { animation-delay: 0.3s; }
+        .contact-info p:nth-child(2) { animation-delay: 0.4s; }
+        .btn-back {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-back:hover {
+            background-color: #5a6268;
         }
     </style>
 </head>
@@ -39,8 +102,11 @@ $patient = mysqli_fetch_assoc($patient_result);
 
     <div class="main-content">
         <h2>Contact Information for <?php echo htmlspecialchars($patient['name']); ?></h2>
-        <p>Email: <?php echo htmlspecialchars($patient['email']); ?></p>
-        <p>Phone: <?php echo htmlspecialchars($patient['phone']); ?></p>
+        <div class="contact-info">
+            <p><strong>Email:</strong> <?php echo htmlspecialchars($patient['email']); ?></p>
+            <p><strong>Phone:</strong> <?php echo htmlspecialchars($patient['phone']); ?></p>
+        </div>
+        <button class="btn-back" onclick="window.history.back()">← Back</button>
     </div>
 
 </body>

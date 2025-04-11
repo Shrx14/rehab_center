@@ -76,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             color: #333;
+
         }
         .container {
             max-width: 800px;
@@ -84,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
         }
         h2 {
             text-align: center;
@@ -106,9 +108,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border: none;
             border-radius: 8px;
             cursor: pointer;
+
         }
         .btn-primary:hover {
             background-color: #0056b3;
+
         }
         .alert {
             margin-top: 20px;
@@ -173,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="form-group">
                 <label for="surgery_status">Surgery Status</label>
-                <input type="text" id="surgery_status" name="surgery_status" class="form-control" value="<?php echo htmlspecialchars($patient['Surgery_status']); ?>" required>
+                <input type="text" id="surgery_status" name="surgery_status" class="form-control" value="<?php echo htmlspecialchars($patient['Surgery_status']); ?>" >
             </div>
             <button type="submit" class="btn btn-primary">Update Patient</button>
         </form>

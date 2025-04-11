@@ -37,6 +37,27 @@ if (!$doctor) {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             color: #333;
+            scroll-behavior: smooth;
+        }
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
         .container {
             max-width: 800px;
@@ -45,6 +66,9 @@ if (!$doctor) {
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.4s forwards;
         }
         h2 {
             text-align: center;
@@ -71,7 +95,8 @@ if (!$doctor) {
             border-radius: 8px;
             font-size: 18px;
             font-weight: 500;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            transform: scale(1);
             color: white;
             text-align: center;
             text-decoration: none;
@@ -79,6 +104,7 @@ if (!$doctor) {
         }
         .btn-back:hover {
             background-color: #5a6268;
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -105,7 +131,7 @@ if (!$doctor) {
             <p><?php echo htmlspecialchars($doctor['max_patients']); ?></p>
 
             <label>Scheduled Appointments:</label>
-            <p><?php echo htmlspecialchars($doctor['scheduled_appointments']); ?></p>
+            <p><?php echo htmlspecialchars($doctor['appointment_count']); ?></p>
         </div>
         <a href="all_doc.php" class="btn-back">Back to Doctors List</a>
     </div>

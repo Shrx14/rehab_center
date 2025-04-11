@@ -38,6 +38,27 @@ if (mysqli_num_rows($result) > 0) {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             color: #333;
+            scroll-behavior: smooth;
+        }
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
         .sidebar {
             height: 100%;
@@ -65,13 +86,20 @@ if (mysqli_num_rows($result) > 0) {
         .main-content {
             margin-left: 250px;
             padding: 20px;
+            animation: slideInUp 0.5s ease-out;
         }
         .card {
             border: none;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out forwards;
         }
+        .card:nth-child(1) { animation-delay: 0.2s; }
+        .card:nth-child(2) { animation-delay: 0.3s; }
+        .card:nth-child(3) { animation-delay: 0.4s; }
         .card-header {
             background-color: #ffffff;
             border-bottom: 1px solid #e9ecef;

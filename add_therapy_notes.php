@@ -49,10 +49,21 @@ if (isset($_POST['submit'])) {
     <title>Add Therapy Notes</title>
     <link rel="stylesheet" href="css/styles.css"> <!-- Use the existing styles.css -->
     <style>
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             color: #333;
+            scroll-behavior: smooth;
         }
         .container {
             max-width: 600px;
@@ -61,6 +72,9 @@ if (isset($_POST['submit'])) {
             background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.4s forwards;
         }
         h1 {
             text-align: center;
@@ -87,9 +101,12 @@ if (isset($_POST['submit'])) {
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: all 0.3s ease;
+            transform: scale(1);
         }
         button:hover {
             background-color: #0056b3;
+            transform: scale(1.05);
         }
     </style>
 </head>

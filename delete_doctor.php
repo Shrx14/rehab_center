@@ -89,6 +89,7 @@ try {
     ob_end_clean();
     header("Location: all_doc.php?success=Doctor and related appointments deleted successfully");
     exit();
+    
 } catch (Exception $e) {
     // Rollback transaction on error
     mysqli_rollback($conn);

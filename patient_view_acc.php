@@ -36,29 +36,58 @@ if ($result && mysqli_num_rows($result) > 0) {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             color: #333;
+            scroll-behavior: smooth;
+        }
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         .container {
             max-width: 800px;
             margin: 50px auto;
-            padding: 20px;
+            padding: 30px;
             background-color: #ffffff;
             border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out forwards;
         }
         h2 {
             text-align: center;
             margin-bottom: 30px;
-            color: #0056b3;
+            color: #007bff;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.2s forwards;
         }
         .table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            animation: fadeIn 0.8s ease-out 0.3s forwards;
+            opacity: 0;
         }
         .table th, .table td {
-            padding: 12px;
+            padding: 15px;
             text-align: left;
             border: 1px solid #e9ecef;
+            transition: background-color 0.3s ease;
+        }
+        .table tr:hover td {
+            background-color: #f1f8ff;
         }
         .table th {
             background-color: #007bff;

@@ -47,6 +47,27 @@ $sessions_result = mysqli_query($conn, $sessions_query);
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             color: #333;
+            scroll-behavior: smooth;
+        }
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
         .sidebar {
             height: 100%;
@@ -74,10 +95,14 @@ $sessions_result = mysqli_query($conn, $sessions_query);
         .main-content {
             margin-left: 250px;
             padding: 20px;
+            animation: slideInUp 0.5s ease-out;
         }
         .section-title {
             margin-bottom: 20px;
             color: #0056b3;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.2s forwards;
         }
         .table {
             width: 100%;
@@ -85,6 +110,9 @@ $sessions_result = mysqli_query($conn, $sessions_query);
             background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.3s forwards;
         }
         .table th, .table td {
             padding: 12px;

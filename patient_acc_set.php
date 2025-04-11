@@ -84,28 +84,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             color: #333;
+            scroll-behavior: smooth;
+        }
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         .container {
             max-width: 800px;
             margin: 50px auto;
-            padding: 20px;
+            padding: 30px;
             background-color: #ffffff;
             border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out forwards;
         }
         h2 {
             text-align: center;
             margin-bottom: 30px;
-            color: #0056b3;
+            color: #007bff;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e9ecef;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.2s forwards;
         }
         .form-group {
             margin-bottom: 20px;
         }
         .form-control {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #e9ecef;
             border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
         }
         .btn-primary {
             width: 100%;
@@ -114,6 +142,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border: none;
             border-radius: 8px;
             cursor: pointer;
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.3s forwards;
         }
         .btn-primary:hover {
             background-color: #0056b3;
@@ -121,6 +153,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .alert {
             margin-top: 20px;
             border-radius: 8px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 0.3s forwards;
         }
         .error {
             color: #dc3545;

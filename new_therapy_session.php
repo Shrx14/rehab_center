@@ -32,6 +32,27 @@ if (isset($_POST['add'])) {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             color: #333;
+            scroll-behavior: smooth;
+        }
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
         .sidebar {
             height: 100%;
@@ -59,12 +80,16 @@ if (isset($_POST['add'])) {
         .main-content {
             margin-left: 250px;
             padding: 20px;
+            animation: slideInUp 0.5s ease-out;
         }
         .form-section {
             background-color: #ffffff;
-            padding: 20px;
+            padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.2s forwards;
         }
         .form-group {
             margin-bottom: 20px;
@@ -83,6 +108,10 @@ if (isset($_POST['add'])) {
             border: none;
             border-radius: 8px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.3s forwards;
         }
         .submit-btn:hover {
             background-color: #0056b3;
@@ -95,7 +124,7 @@ if (isset($_POST['add'])) {
 </head>
 <body>
     <div class="container mt-5">
-        <h3>Add Therapy Session</h3>
+        <h3 class="mb-4" style="color: #007bff; transform: translateY(20px); opacity: 0; animation: slideInUp 0.5s ease-out 0.1s forwards;">Add Therapy Session</h3>
                 
         <?php if (isset($error)): ?>
             <div class="alert alert-danger"><?php echo $error; ?></div>

@@ -6,6 +6,16 @@
     <title>Welcome to Rehab Center</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
         body {
             background: url('Home.jpg') no-repeat center center fixed;
             background-size: cover;
@@ -13,6 +23,7 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             position: relative;
+            scroll-behavior: smooth;
         }
         body::before {
             content: '';
@@ -30,14 +41,18 @@
             padding: 50px 20px;
             text-align: center;
             border-bottom: 4px solid #1565c0;
+            animation: fadeIn 1s ease-in-out;
         }
         .header h1 {
             font-size: 4.5rem;
             margin: 0;
+            animation: slideInDown 0.8s ease-out;
         }
         .header p {
             font-size: 1.8rem;
             margin: 10px 0 0;
+            animation: slideInDown 0.8s ease-out 0.2s;
+            animation-fill-mode: both;
         }
         .btn-container {
             margin-top: 20px;
@@ -48,7 +63,13 @@
             font-size: 1.1rem;
             font-weight: bold;
             border-radius: 25px;
-            transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease;
+            transform: scale(1);
+            animation: slideInUp 0.8s ease-out 0.4s;
+            animation-fill-mode: both;
+        }
+        .btn-custom:hover {
+            transform: scale(1.05);
         }
         .btn-custom-primary {
             background-color: #1976d2;
@@ -57,6 +78,7 @@
         }
         .btn-custom-primary:hover {
             background-color: #0d47a1;
+            transform: scale(1.05);
         }
         footer {
             margin-top: 30px;
@@ -81,7 +103,7 @@
     </footer>
 
     <!-- Login Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal fade animate-fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -105,6 +127,11 @@
                         </div>
                         <script>
                             document.querySelector('.password-toggle').addEventListener('click', function() {
+                                this.style.transition = 'transform 0.3s ease';
+                                this.style.transform = 'scale(1.1)';
+                                setTimeout(() => {
+                                    this.style.transform = 'scale(1)';
+                                }, 300);
                                 const passwordInput = document.getElementById('password');
                                 const icon = this;
                                 if (passwordInput.type === 'password') {

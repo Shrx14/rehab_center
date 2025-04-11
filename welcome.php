@@ -84,6 +84,7 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
+            transform: scale(1);
         }
         .btn-custom::before {
             content: '';
@@ -108,7 +109,7 @@
         .btn-primary:hover {
             background-color: transparent;
             color: #007bff;
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.05);
         }
         .btn-success {
             background-color: #28a745;
@@ -118,7 +119,7 @@
         .btn-success:hover {
             background-color: transparent;
             color: #28a745;
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.05);
         }
         .why-choose-us {
             text-align: center;

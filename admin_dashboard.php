@@ -57,6 +57,7 @@ $session_count = mysqli_fetch_assoc($session_count_result)['session_count'];
             color: #333;
             font-size: 18px;
             padding: 20px;
+            scroll-behavior: smooth;
         }
         .sidebar {
             height: 100%;
@@ -67,6 +68,7 @@ $session_count = mysqli_fetch_assoc($session_count_result)['session_count'];
             background-color: #343a40;
             padding: 25px;
             color: white;
+            animation: fadeIn 0.8s ease-out;
         }
         .sidebar h4 {
             text-align: center;
@@ -84,7 +86,15 @@ $session_count = mysqli_fetch_assoc($session_count_result)['session_count'];
             display: block;
             border-radius: 6px;
             margin-bottom: 12px;
+            transform: translateX(-20px);
+            opacity: 0;
+            animation: slideInLeft 0.5s ease-out forwards;
         }
+        .sidebar a:nth-child(1) { animation-delay: 0.2s; }
+        .sidebar a:nth-child(2) { animation-delay: 0.3s; }
+        .sidebar a:nth-child(3) { animation-delay: 0.4s; }
+        .sidebar a:nth-child(4) { animation-delay: 0.5s; }
+        .sidebar a:nth-child(5) { animation-delay: 0.6s; }
         .sidebar a:hover {
             background-color: #495057;
         }
@@ -103,7 +113,14 @@ $session_count = mysqli_fetch_assoc($session_count_result)['session_count'];
             padding: 25px;
             background-color:rgb(150, 227, 199);
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out forwards;
         }
+        .card:nth-child(1) { animation-delay: 0.2s; }
+        .card:nth-child(2) { animation-delay: 0.3s; }
+        .card:nth-child(3) { animation-delay: 0.4s; }
+        .card:nth-child(4) { animation-delay: 0.5s; }
         .card h5 {
             margin-bottom: 12px;
             font-weight: bold;
@@ -120,19 +137,24 @@ $session_count = mysqli_fetch_assoc($session_count_result)['session_count'];
             border-radius: 10px;
             padding: 15px;
             font-size: 20px;
+            transition: all 0.3s ease;
+            transform: scale(1);
         }
         .btn-primary:hover {
             background-color: #0056b3;
+            transform: scale(1.05);
         }
         .search-bar {
-    background-color: #ffffff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: right;
-    align-items: center;
-}
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: right;
+            align-items: center;
+            animation: slideInRight 0.8s ease-out 0.6s;
+            animation-fill-mode: both;
+        }
 
 .search-bar form {
     width: 80%;
@@ -156,13 +178,35 @@ $session_count = mysqli_fetch_assoc($session_count_result)['session_count'];
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.3s ease;
+    transform: scale(1);
 }
 
 .search-bar button:hover {
     background-color: #0056b3;
+    transform: scale(1.05);
 }
 
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>

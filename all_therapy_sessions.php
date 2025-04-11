@@ -30,6 +30,7 @@ $result = mysqli_query($conn, $query);
             color: #333;
             font-size: 18px;
             padding: 20px;
+            scroll-behavior: smooth;
         }
 
         /* Sidebar Styling */
@@ -42,6 +43,7 @@ $result = mysqli_query($conn, $query);
             background-color: #343a40;
             padding: 25px;
             color: white;
+            animation: fadeIn 0.8s ease-out;
         }
         .sidebar h4 {
             text-align: center;
@@ -59,7 +61,15 @@ $result = mysqli_query($conn, $query);
             display: block;
             border-radius: 6px;
             margin-bottom: 12px;
+            transform: translateX(-20px);
+            opacity: 0;
+            animation: slideInLeft 0.5s ease-out forwards;
         }
+        .sidebar a:nth-child(1) { animation-delay: 0.2s; }
+        .sidebar a:nth-child(2) { animation-delay: 0.3s; }
+        .sidebar a:nth-child(3) { animation-delay: 0.4s; }
+        .sidebar a:nth-child(4) { animation-delay: 0.5s; }
+        .sidebar a:nth-child(5) { animation-delay: 0.6s; }
 
         .sidebar a:hover {
             background-color: #495057;
@@ -79,6 +89,9 @@ $result = mysqli_query($conn, $query);
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
             padding: 20px;
             overflow-x: auto;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.4s forwards;
         }
 
         .table {
@@ -110,7 +123,28 @@ $result = mysqli_query($conn, $query);
             padding: 10px 14px;
             border-radius: 8px;
             border: none;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            transform: scale(1);
+        }
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         .btn-edit {
@@ -126,6 +160,7 @@ $result = mysqli_query($conn, $query);
 
         .btn:hover {
             filter: brightness(90%);
+            transform: scale(1.05);
         }
         .action-buttons {
             display: flex;
@@ -193,7 +228,7 @@ $result = mysqli_query($conn, $query);
             <h3 style="font-size: 30px;">Manage Therapy Sessions</h3>
         </div>
 
-<div class="add-doctor-box"> <!-- Adjusted margin to lower the box -->
+<div class="add-doctor-box" style="animation: slideInRight 0.8s ease-out 0.6s; animation-fill-mode: both;"> <!-- Adjusted margin to lower the box -->
     <div class="card" style="background-color: #FAD7A0;"> <!-- Pastel color -->
         <div class="card-body text-center">
             <a href="new_therapy_session.php" class="btn btn-light" style="font-size: 18px; font-weight: bold;">+ Add New Therapy Session</a>

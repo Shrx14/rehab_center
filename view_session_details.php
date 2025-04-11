@@ -42,9 +42,24 @@ $result = mysqli_query($conn, $query);
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            scroll-behavior: smooth;
+        }
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" style="transform: translateY(20px); opacity: 0; animation: slideInUp 0.5s ease-out 0.4s forwards;">
         <h2>Session Details</h2>
         
         <?php if (mysqli_num_rows($result) > 0): ?>

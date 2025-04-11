@@ -15,21 +15,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Invalid email address.";
     } else {
-        // Delete query to completely remove the patient record from the 'patients' table
-        $delete_query = "DELETE FROM patients WHERE email = '$email'"; 
+        // Start transaction
+        mysqli_begin_transaction($conn);
         
-        if (mysqli_query($conn, $delete_query)) {
-            // Successfully deleted the account
-            echo "<h2 style='padding: 8px 12px; font-size:15px; border-radius:6px; border:none; background-color: #85C1E9;color: black;' >Your account has been deleted successfully.</h3>";
-            echo "<a href='welcome.php' class='btn btn-view btn-sm' style='padding: 8px 12px; font-size:15px; border-radius:6px; border:none; background-color: #85C1E9;color: black;'>Go to Welcome Page</a>";
-
-            exit();
-
-
-
-        } else {
-            // Error with the query
-            $error = "Failed to delete account. Please try again later.";
+        try {
+            // First get patient_id for the email
+            $stmt = $conn->prepare("SELECT patient_id FROM patients WHERE email = ?");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $patient = $result->fetch_assoc();
+            $patient_id = $patient['patient_id'];
+            $stmt->close();
+            
+            if (!$patient_id) {
+                throw new Exception("Patient not found");
+            }
+            
+            // Delete all appointments for this patient
+            $stmt = $conn->prepare("DELETE FROM appointments WHERE patient_id = ?");
+            $stmt->bind_param("i", $patient_id);
+            $stmt->execute();
+            $stmt->close();
+            
+            // Now delete the patient record
+            $stmt = $conn->prepare("DELETE FROM patients WHERE email = ?");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            
+            if ($stmt->affected_rows > 0) {
+                // Commit transaction if all operations succeeded
+                mysqli_commit($conn);
+                
+                // Successfully deleted the account
+                echo "<div class='container' style='text-align: center;'>";
+                echo "<h2 style='color: #28a745; margin-bottom: 20px;'>Your account has been deleted successfully</h2>";
+                echo "<a href='welcome.php' class='btn btn-success' style='padding: 10px 20px;'>Go to Welcome Page</a>";
+                echo "</div>";
+                exit();
+            } else {
+                throw new Exception("Failed to delete patient record");
+            }
+        } catch (Exception $e) {
+            // Rollback transaction on error
+            mysqli_rollback($conn);
+            $error = "Failed to delete account: " . $e->getMessage();
         }
     }
 }
@@ -47,19 +77,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             color: #333;
+            scroll-behavior: smooth;
+        }
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         .container {
             max-width: 800px;
             margin: 50px auto;
-            padding: 20px;
+            padding: 30px;
             background-color: #ffffff;
             border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out forwards;
         }
         h2 {
             text-align: center;
             margin-bottom: 30px;
-            color: #0056b3;
+            color: #dc3545;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f8d7da;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.2s forwards;
         }
         .alert {
             margin-top: 20px;
@@ -70,6 +123,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             padding: 12px;
             border-radius: 8px;
             cursor: pointer;
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.3s forwards;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+        .warning-message {
+            color: #dc3545;
+            margin-bottom: 20px;
+            font-weight: bold;
+            animation: fadeIn 0.8s ease-out 0.3s forwards;
+            opacity: 0;
         }
     </style>
 </head>
@@ -79,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Display any error message -->
         <?php if (isset($error)) echo "<div class='alert alert-danger'>$error</div>"; ?>
         <form method="POST">
-            <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+            <p class="warning-message">⚠️ Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently lost.</p>
             <button type="submit" class="btn btn-danger">Delete Account</button>
         </form>
     </div>
