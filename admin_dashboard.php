@@ -209,7 +209,7 @@ $session_count = mysqli_fetch_assoc($session_count_result)['session_count'];
         }
     </style>
 </head>
-<body>
+<body style="position: relative;  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('H1.jpg'); background-size: cover; background-position: center; background-attachment: local; height: 100vh; display: flex; flex-direction: column;  animation: fadeIn 1.5s ease-in-out;">
     <!-- Sidebar -->
     <div class="sidebar">
         <h4>Admin Dashboard</h4>

@@ -139,12 +139,22 @@ $doctors_result = mysqli_query($conn, $doctors_query);
             cursor: pointer;
             text-decoration: none;
         }
+        .header-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 10px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.2s forwards;
+        }
         .message-btn:hover {
             background-color: #218838;
         }
     </style>
 </head>
-<body>
+<body style="position: relative; background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('H1.jpg'); background-size: cover; background-position: center; background-attachment: local; height: 100vh; display: flex; flex-direction: column; animation: fadeIn 1.5s ease-in-out;">
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -161,13 +171,13 @@ $doctors_result = mysqli_query($conn, $doctors_query);
 
     <!-- Main Content -->
     <div class="main-content">
-        <h2 class="section-title">My Doctors</h2>
-
-        <!-- Total Number of Doctors -->
-        <div>
-            <h5>Total Doctors: <?php echo mysqli_num_rows($doctors_result); ?></h5>
+        <div class="header-section">
+            <h3>My Doctors</h3>
+            <!-- Total Number of Doctors -->
+            <div>
+                <h5>Total Doctors: <?php echo mysqli_num_rows($doctors_result); ?></h5>
+            </div>
         </div>
-
         <!-- Doctors Table -->
         <table class="table">
             <thead>

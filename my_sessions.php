@@ -119,6 +119,16 @@ $sessions_result = mysqli_query($conn, $sessions_query);
             text-align: left;
             border: 1px solid #e9ecef;
         }
+        .header-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 10px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.2s forwards;
+        }
         .table th {
             background-color: #007bff;
             color: white;
@@ -131,7 +141,7 @@ $sessions_result = mysqli_query($conn, $sessions_query);
         }
     </style>
 </head>
-<body>
+<body style="position: relative; background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('H1.jpg'); background-size: cover; background-position: center; background-attachment: local; height: 100vh; display: flex; flex-direction: column; animation: fadeIn 1.5s ease-in-out;">
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -148,8 +158,9 @@ $sessions_result = mysqli_query($conn, $sessions_query);
 
     <!-- Main Content -->
     <div class="main-content">
-        <h2 class="section-title">Scheduled Sessions</h2>
-
+        <div class="header-section">
+        <h3>Scheduled Sessions</h3>
+        </div>
         <!-- Session Details Table -->
         <table class="table">
             <thead>

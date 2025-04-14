@@ -58,7 +58,7 @@ $result = mysqli_query($conn, $query);
         }
     </style>
 </head>
-<body>
+<body style="position: relative;  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('H1.jpg'); background-size: cover; background-position: center; background-attachment: local; height: 100vh; display: flex; flex-direction: column; animation: fadeIn 1.5s ease-in-out;">
     <div class="container" style="transform: translateY(20px); opacity: 0; animation: slideInUp 0.5s ease-out 0.4s forwards;">
         <h2>Session Details</h2>
         

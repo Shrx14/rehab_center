@@ -17,31 +17,26 @@
             }
         }
         body {
-            background: url('Home.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #333;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            position: relative;
+            padding: 0;
+            color: #333;
             scroll-behavior: smooth;
         }
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.85);
-            z-index: -1;
-        }
+
         .header {
-            background: rgba(30, 136, 229, 0.9);
-            color: #fff;
-            padding: 50px 20px;
+            position: relative;
             text-align: center;
-            border-bottom: 4px solid #1565c0;
-            animation: fadeIn 1s ease-in-out;
+            color: white;
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('H1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 120vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: fadeIn 1.5s ease-in-out;
         }
         .header h1 {
             font-size: 4.5rem;
@@ -54,32 +49,6 @@
             animation: slideInDown 0.8s ease-out 0.2s;
             animation-fill-mode: both;
         }
-        .btn-container {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .btn-custom {
-            padding: 12px 25px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            transform: scale(1);
-            animation: slideInUp 0.8s ease-out 0.4s;
-            animation-fill-mode: both;
-        }
-        .btn-custom:hover {
-            transform: scale(1.05);
-        }
-        .btn-custom-primary {
-            background-color: #1976d2;
-            border: none;
-            color: #fff;
-        }
-        .btn-custom-primary:hover {
-            background-color: #0d47a1;
-            transform: scale(1.05);
-        }
         footer {
             margin-top: 30px;
             text-align: center;
@@ -91,65 +60,63 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Welcome to Rehab Center</h1>
-        <p>Your Path to Recovery and Wellness</p>
-    </div>
-    <div class="btn-container">
-        <button class="btn btn-custom btn-custom-primary" data-toggle="modal" data-target="#loginModal">Login</button>
-    </div>
-    <footer>
-        <p>&copy; 2025 Rehab Center. All Rights Reserved.</p>
-    </footer>
-
-    <!-- Login Modal -->
-    <div class="modal fade animate-fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+    <div class="header" style="height: 100vh;">
+        <div class="container d-flex flex-column justify-content-center align-items-center" style="
+            max-width: 500px;
+            padding: 40px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 10px;
+            border: 3px solid cyan;
+            box-shadow: 0px 0px 5px cyan, 0px 0px 5px cyan inset;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out forwards;
+        ">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #0056b3; font-size: 2rem; font-weight: 600;">Login</h2>
+            <form method="POST" action="login.php">
+                <div class="form-group">
+                    <label for="email" style="color: #0056b3; font-size: 1rem;">Email address</label>
+                    <input type="email" class="form-control" id="email" name="email" required style="border-radius: 8px;">
                 </div>
-                <div class="modal-body">
-                    <form method="POST" action="login.php">
-                        <div class="form-group">
-                            <label for="email">Email address</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <div class="password-input">
-                                <input type="password" class="form-control" id="password" name="password" required>
-                                <i class="fas fa-eye password-toggle" style="position: absolute; right: 25px; top: 38px; cursor: pointer;"></i>
-                            </div>
-                        </div>
-                        <script>
-                            document.querySelector('.password-toggle').addEventListener('click', function() {
-                                this.style.transition = 'transform 0.3s ease';
-                                this.style.transform = 'scale(1.1)';
-                                setTimeout(() => {
-                                    this.style.transform = 'scale(1)';
-                                }, 300);
-                                const passwordInput = document.getElementById('password');
-                                const icon = this;
-                                if (passwordInput.type === 'password') {
-                                    passwordInput.type = 'text';
-                                    icon.classList.replace('fa-eye', 'fa-eye-slash');
-                                } else {
-                                    passwordInput.type = 'password';
-                                    icon.classList.replace('fa-eye-slash', 'fa-eye');
-                                }
-                            });
-                        </script>
-                        <button type="submit" name="login" class="btn btn-primary btn-block">Login</button>
-                        <div class="text-center mt-3">
-                            <p>Don't have an account? <a href="signup.php">Sign Up</a></p>
-                        </div>
-                    </form>
+                <div class="form-group">
+                    <label for="password" style="color: #0056b3; font-size: 1rem;">Password</label>
+                    <div class="password-input" style="position: relative;">
+                        <input type="password" class="form-control" id="password" name="password" required style="border-radius: 8px;">
+                        <i class="fas fa-eye password-toggle" style="position: absolute; right: 15px; top: 38px; cursor: pointer; color: #0056b3;"></i>
+                    </div>
                 </div>
-            </div>
+                <script>
+                    document.querySelector('.password-toggle').addEventListener('click', function() {
+                        this.style.transition = 'transform 0.3s ease';
+                        this.style.transform = 'scale(1.1)';
+                        setTimeout(() => {
+                            this.style.transform = 'scale(1)';
+                        }, 300);
+                        const passwordInput = document.getElementById('password');
+                        const icon = this;
+                        if (passwordInput.type === 'password') {
+                            passwordInput.type = 'text';
+                            icon.classList.replace('fa-eye', 'fa-eye-slash');
+                        } else {
+                            passwordInput.type = 'password';
+                            icon.classList.replace('fa-eye-slash', 'fa-eye');
+                        }
+                    });
+                </script>
+                <button type="submit" name="login" class="btn btn-primary btn-block" style="
+                    background: linear-gradient(135deg, rgb(106, 205, 169) 0%, rgb(187, 150, 199) 100%);
+                    border: none;
+                    border-radius: 8px;
+                    padding: 12px;
+                    margin-top: 20px;
+                    font-size: 1.1rem;
+                ">Login</button>
+                <div class="text-center mt-3">
+                    <p style="color: #0056b3; font-size: 0.9rem;">Don't have an account? <a href="signup.php" style="color: #0056b3; font-size: 0.9rem;">Sign Up</a></p>
+                </div>
+            </form>
         </div>
     </div>
 

@@ -162,7 +162,7 @@ switch ($page) {
                     margin-top: 50px;
                     text-align: center;
                     font-style: italic;
-                    color: #555;
+                    color:rgb(8, 12, 69);
                     font-size: 18px;
                     animation: slideInLeft 0.5s ease-out 0.5s forwards;
                     opacity: 0;
@@ -177,7 +177,7 @@ switch ($page) {
                 }
             </style>
         </head>
-        <body>
+        <body style="position: relative;  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('H1.jpg'); background-size: cover; background-position: center; background-attachment: local; height: 100vh; display: flex; flex-direction: column; animation: fadeIn 1.5s ease-in-out;">
 
             <!-- Sidebar -->
             <div class="sidebar">

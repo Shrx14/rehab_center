@@ -155,6 +155,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 8px;
             cursor: pointer;
         }
+        .header-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 10px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out 0.2s forwards;
+        }
         .submit-btn:hover {
             background-color: #0056b3;
         }
@@ -167,7 +177,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </style>
 </head>
-<body>
+<body style="position: relative; background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('H1.jpg'); background-size: cover; background-position: center; background-attachment: local; height: 100vh; display: flex; flex-direction: column; animation: fadeIn 1.5s ease-in-out;">
 
 <!-- Sidebar -->
 <div class="sidebar">
@@ -183,6 +193,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="main-content">
+        <div class="header-section">
         <h2>Book an Appointment</h2>
 
         <!-- Success/Failure Message -->
@@ -191,7 +202,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php echo $success_message; ?>
             </div>
         <?php endif; ?>
-
+        </div>
         <!-- Appointment Booking Form -->
         <form action="my_bookings.php" method="POST">
 

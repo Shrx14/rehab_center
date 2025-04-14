@@ -110,7 +110,7 @@ if (isset($_POST['submit'])) {
         }
     </style>
 </head>
-<body>
+<body style="position: relative;  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('H1.jpg'); background-size: cover; background-position: center; background-attachment: local; height: 100vh; display: flex; flex-direction: column; animation: fadeIn 1.5s ease-in-out;">
     <div class="container">
         <h1>Add Therapy Notes</h1>
         <form method="POST" action="">
