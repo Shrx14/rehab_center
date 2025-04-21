@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2025 at 05:13 PM
+-- Generation Time: Apr 21, 2025 at 02:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,8 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `username`, `password`, `email`, `role_id`) VALUES
-(1, 'admin1', 'admin1', 'admin1@rehab.com', 1);
+(1, 'admin1', 'admin1', 'admin1@rehab.com', 1),
+(2, 'admin2', '$2y$10$ItFcTy8OXzW3K6gblX4pquCvMPDWkb4NNZc14utoc19O176Et0YM2', 'admin2@rehab.com', 1);
 
 -- --------------------------------------------------------
 
@@ -69,23 +70,26 @@ INSERT INTO `appointments` (`appointment_id`, `patient_id`, `doctor_id`, `appoin
 (5, 9, 5, '2025-03-14', '00:00:00', 'Cancelled'),
 (6, 7, 6, '2025-03-15', '00:00:00', 'Completed'),
 (7, 18, 7, '2025-03-16', '00:00:00', 'Completed'),
-(8, 23, 8, '2025-03-17', '00:00:00', 'Scheduled'),
-(9, 19, 9, '2025-03-18', '00:00:00', 'Scheduled'),
-(10, 17, 10, '2025-03-19', '00:00:00', 'Scheduled'),
+(8, 23, 8, '2025-03-17', '00:00:00', 'Completed'),
+(9, 19, 9, '2025-03-18', '00:00:00', 'Completed'),
+(10, 17, 10, '2025-03-19', '00:00:00', 'Completed'),
 (11, 12, 11, '2025-03-20', '00:00:00', 'Completed'),
-(12, 15, 12, '2025-03-21', '00:00:00', 'Scheduled'),
+(12, 15, 12, '2025-03-21', '00:00:00', 'Completed'),
 (13, 14, 13, '2025-03-22', '00:00:00', 'Cancelled'),
-(14, 8, 14, '2025-03-23', '00:00:00', 'Scheduled'),
-(15, 21, 15, '2025-03-24', '00:00:00', 'Scheduled'),
+(14, 8, 14, '2025-03-23', '00:00:00', 'Completed'),
+(15, 21, 15, '2025-03-24', '00:00:00', 'Completed'),
 (16, 22, 16, '2025-03-25', '00:00:00', 'Completed'),
-(17, 9, 17, '2025-03-26', '00:00:00', 'Scheduled'),
-(18, 7, 18, '2025-03-27', '00:00:00', 'Scheduled'),
-(19, 18, 19, '2025-03-28', '00:00:00', 'Scheduled'),
+(17, 9, 17, '2025-03-26', '00:00:00', 'Completed'),
+(18, 7, 18, '2025-03-27', '00:00:00', 'Completed'),
+(19, 18, 19, '2025-03-28', '00:00:00', 'Completed'),
 (20, 23, 20, '2025-03-29', '00:00:00', 'Cancelled'),
-(21, 19, 22, '2025-03-30', '00:00:00', 'Scheduled'),
-(81, 17, 1, '2025-03-30', '15:30:00', 'Scheduled'),
-(82, 18, 1, '2025-03-24', '14:15:00', 'Scheduled'),
-(83, 19, 1, '2025-03-15', '14:15:00', 'Completed');
+(21, 19, 22, '2025-03-30', '00:00:00', 'Completed'),
+(81, 17, 1, '2025-03-30', '15:30:00', 'Completed'),
+(82, 18, 1, '2025-03-24', '14:15:00', 'Completed'),
+(83, 19, 1, '2025-03-15', '14:15:00', 'Completed'),
+(84, 31, 22, '2025-04-18', '17:15:00', 'Completed'),
+(85, 31, 23, '2025-04-30', '08:10:00', 'Scheduled'),
+(86, 31, 23, '2025-04-19', '10:30:00', 'Completed');
 
 -- --------------------------------------------------------
 
@@ -111,27 +115,28 @@ CREATE TABLE `doctors` (
 --
 
 INSERT INTO `doctors` (`doctor_id`, `name`, `speciality`, `email`, `password`, `phone`, `experience`, `max_patients`, `role_id`, `appointment_count`) VALUES
-(1, 'Dr. Amit S', 'Neurologist', 'amits1@rehab.com', 'amits1', '+91 9876543210', '5 years', 4, 2, 2),
+(1, 'Dr. Amit S', 'Neurologist', 'amits1@rehab.com', 'amits1', '+91 9876543210', '5 years', 4, 2, 0),
 (2, 'Dr. John Doe', 'Cardiologist', 'johndoe@rehab.com', 'johndoc1', '+91 9123456781', '10 years', 6, 2, 0),
 (3, 'Dr. Sarah Lee', 'Orthopedic', 'sarahlee@rehab.com', 'sarahdoc1', '+91 9234567892', '8 years', 4, 2, 0),
 (4, 'Dr. Michael Brown', 'Dermatologist', 'michaelbrown@rehab.com', 'mikedoc1', '+91 9345678903', '12 years', 5, 2, 0),
 (5, 'Dr. Emily Davis', 'Pediatrician', 'emilydavis@rehab.com', 'emilydoc1', '+91 9456789014', '7 years', 6, 2, 0),
 (6, 'Dr. Liam White', 'Gastroenterologist', 'liamwhite@rehab.com', 'liamdoc1', '+91 9567890125', '9 years', 5, 2, 0),
 (7, 'Dr. Sophia Green', 'Psychiatrist', 'sophiagreen@rehab.com', 'sophiadoc1', '+91 9678901236', '5 years', 4, 2, 0),
-(8, 'Dr. William Hall', 'Oncologist', 'williamhall@rehab.com', 'willdoc1', '+91 9789012347', '15 years', 8, 2, 1),
-(9, 'Dr. Olivia Scott', 'Neurologist', 'oliviascott@rehab.com', 'oliviadoc1', '+91 9890123458', '11 years', 5, 2, 1),
-(10, 'Dr. James Martinez', 'Endocrinologist', 'jamesmartinez@rehab.com', 'jamesdoc1', '+91 9901234569', '10 years', 6, 2, 1),
+(8, 'Dr. William Hall', 'Oncologist', 'williamhall@rehab.com', 'willdoc1', '+91 9789012347', '15 years', 8, 2, 0),
+(9, 'Dr. Olivia Scott', 'Neurologist', 'oliviascott@rehab.com', 'oliviadoc1', '+91 9890123458', '11 years', 5, 2, 0),
+(10, 'Dr. James Martinez', 'Endocrinologist', 'jamesmartinez@rehab.com', 'jamesdoc1', '+91 9901234569', '10 years', 6, 2, 0),
 (11, 'Dr. Charlotte King', 'Urologist', 'charlotteking@rehab.com', 'charlottedoc1', '+91 9012345670', '6 years', 4, 2, 0),
-(12, 'Dr. Benjamin Lopez', 'Hematologist', 'benjaminlopez@rehab.com', 'benjamindoc1', '+91 9123456781', '8 years', 5, 2, 1),
+(12, 'Dr. Benjamin Lopez', 'Hematologist', 'benjaminlopez@rehab.com', 'benjamindoc1', '+91 9123456781', '8 years', 5, 2, 0),
 (13, 'Dr. Mia Clark', 'Radiologist', 'miaclark@rehab.com', 'miadoc1', '+91 9234567892', '7 years', 5, 2, 0),
-(14, 'Dr. Elijah Walker', 'Pulmonologist', 'elijahwalker@rehab.com', 'elijahdoc1', '+91 9345678903', '9 years', 6, 2, 1),
-(15, 'Dr. Abigail Adams', 'Nephrologist', 'abigailadams@rehab.com', 'abigaildoc1', '+91 9456789014', '10 years', 5, 2, 1),
+(14, 'Dr. Elijah Walker', 'Pulmonologist', 'elijahwalker@rehab.com', 'elijahdoc1', '+91 9345678903', '9 years', 6, 2, 0),
+(15, 'Dr. Abigail Adams', 'Nephrologist', 'abigailadams@rehab.com', 'abigaildoc1', '+91 9456789014', '10 years', 5, 2, 0),
 (16, 'Dr. Lucas Young', 'Ophthalmologist', 'lucasyoung@rehab.com', 'lucasdoc1', '+91 9567890125', '5 years', 4, 2, 0),
-(17, 'Dr. Amelia Allen', 'Allergist', 'ameliaallen@rehab.com', 'ameliadoc1', '+91 9678901236', '12 years', 7, 2, 1),
-(18, 'Dr. Noah Harris', 'Rheumatologist', 'noahharris@rehab.com', 'noahdoc1', '+91 9789012347', '11 years', 5, 2, 1),
-(19, 'Dr. Isabella Hill', 'Surgeon', 'isabellahill@rehab.com', 'isabelladoc1', '+91 9890123458', '8 years', 6, 2, 1),
+(17, 'Dr. Amelia Allen', 'Allergist', 'ameliaallen@rehab.com', 'ameliadoc1', '+91 9678901236', '12 years', 7, 2, 0),
+(18, 'Dr. Noah Harris', 'Rheumatologist', 'noahharris@rehab.com', 'noahdoc1', '+91 9789012347', '11 years', 5, 2, 0),
+(19, 'Dr. Isabella Hill', 'Surgeon', 'isabellahill@rehab.com', 'isabelladoc1', '+91 9890123458', '8 years', 6, 2, 0),
 (20, 'Dr. Ethan Campbell', 'Pathologist', 'ethancampbell@rehab.com', 'ethandoc1', '+91 9901234569', '9 years', 5, 2, 0),
-(22, 'Aryan M', 'Psychologist', 'aryanmdoc@rehab.com', '$2y$10$4tCDdCo2uqq/2ylvstnbtekeJtcuODGHQhaUn/Z4AhchRoZKcOBpK', '+919898982341', '4', 2, 2, 1);
+(22, 'Dr. Aryan M', 'Psychologist', 'aryanmdoc@rehab.com', '$2y$10$4tCDdCo2uqq/2ylvstnbtekeJtcuODGHQhaUn/Z4AhchRoZKcOBpK', '+919898982341', '4', 2, 2, 0),
+(23, 'Dr. Vedant Patil', 'Physiotherapist', 'vedantdoc@rehab.com', '$2y$10$ewZucXi9lY3OemjL7RCUseTLRvTX3ASQuYVkGQm.TAhHyKXV.0IGO', '+917276500230', NULL, 3, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -177,7 +182,8 @@ INSERT INTO `patients` (`patient_id`, `name`, `age`, `address`, `phone`, `email`
 (24, 'Sneha Kapoor', 27, 'Kolkata, West Bengal', '+919745012345', 'snehakapoor@rehab.com', 'sneha123', 'Spinal Fracture', 'Pending', 3, '2025-01-16'),
 (25, 'Karan Mehta', 38, 'Andheri, Mumbai', '+919988112233', 'karanmehta@rehab.com', 'karan123', 'Cervical Disc Disorder', 'Not Required', 3, NULL),
 (29, 'Neha Kulkarni', 25, 'Thane, Maharashtra', '+919823012345', 'nehakulkarni@rehab.com', 'neha123', 'Spinal Fracture', 'Pending', 3, '2025-01-10'),
-(30, 'Patrick James', 60, 'New Panvel, Maharashtra', '+917889882233', 'patrickjames@rehab.com', '$2y$10$xCmVbOxrsp97GO/hp38mfeTB/9dk/piKajdFjFi0HtpQaLL0qUbf.', 'Spinal Cord Injury', 'Pending', 3, '2025-02-01');
+(30, 'Patrick James', 60, 'New Panvel, Maharashtra', '+917889882233', 'patrickjames@rehab.com', '$2y$10$xCmVbOxrsp97GO/hp38mfeTB/9dk/piKajdFjFi0HtpQaLL0qUbf.', 'Spinal Cord Injury', 'Pending', 3, '2025-02-01'),
+(31, 'Vedant Patil', 48, 'Agnel Hostel', '+917276500230', 'vedant@rehab.com', '$2y$10$/7HGDQwUs2k1w64Uk135a.xvWvm83kLQ5787QdW5x3IEFAJRPzbw6', 'Lumbar Spinal Stenosis', 'Not Required', 3, '2025-04-01');
 
 -- --------------------------------------------------------
 
@@ -230,7 +236,8 @@ INSERT INTO `therapy_sessions` (`session_id`, `patient_id`, `doctor_id`, `appoin
 (12, 12, 11, 12, '2025-03-21', 'Therapy session focused on rehabilitation progress.'),
 (13, 22, 16, 16, '2025-03-25', 'Session to track recovery post-surgery.'),
 (14, 19, 18, 18, '2025-03-28', 'Pain management and relaxation techniques discussed.'),
-(15, 19, 1, 83, '2025-03-15', 'Therapy to improve stress management and mental health.');
+(15, 19, 1, 83, '2025-03-15', 'Therapy to improve stress management and mental health.'),
+(20, 31, 23, 85, '2025-04-21', 'Demo therapy');
 
 --
 -- Indexes for dumped tables
@@ -293,25 +300,25 @@ ALTER TABLE `therapy_sessions`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT for table `doctors`
 --
 ALTER TABLE `doctors`
-  MODIFY `doctor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `doctor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `patients`
 --
 ALTER TABLE `patients`
-  MODIFY `patient_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `patient_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -323,7 +330,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `therapy_sessions`
 --
 ALTER TABLE `therapy_sessions`
-  MODIFY `session_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `session_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Constraints for dumped tables

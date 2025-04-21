@@ -155,7 +155,7 @@ if (mysqli_num_rows($result) > 0) {
         <hr>
         <a href="patient_dashboard.php">Home</a>
         <a href="my_doctors.php">My Doctors</a>
-        <a href="my_sessions.php">Scheduled Sessions</a>
+        <a href="my_sessions.php">My Sessions</a>
         <a href="my_bookings.php">My Bookings</a>
         <a href="patient_settings.php" class="active">Settings</a>
     </div>

@@ -38,6 +38,15 @@ if (isset($_POST['submit'])) {
     } else {
         echo "<script>alert('Error: " . mysqli_error($conn) . "'); window.history.back();</script>";
     }
+} elseif (isset($_POST['complete'])) {
+    // Update appointment status to completed
+    $update_sql = "UPDATE appointments SET status = 'completed' WHERE appointment_id = '$appointment_id'";
+
+    if (mysqli_query($conn, $update_sql)) {
+        echo "<script>alert('Appointment marked as completed!'); window.location.href = 'doc_sessions.php';</script>";
+    } else {
+        echo "<script>alert('Error updating appointment status: " . mysqli_error($conn) . "'); window.history.back();</script>";
+    }
 }
 ?>
 
@@ -86,12 +95,13 @@ if (isset($_POST['submit'])) {
             font-weight: bold;
         }
         textarea {
-            width: 100%;
-            height: 150px;
+            width: 80%;
+            height: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
             margin-bottom: 20px;
+            resize: vertical;
         }
         button {
             width: 100%;
@@ -118,6 +128,7 @@ if (isset($_POST['submit'])) {
             <label>Notes:</label>
             <textarea name="notes" required></textarea>
             <button type="submit" name="submit">Submit Notes</button>
+            <button type="submit" name="complete" style="background-color: #28a745; margin-top: 10px;">Mark Session as Completed</button>
         </form>
     </div>
 </body>

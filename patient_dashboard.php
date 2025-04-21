@@ -40,7 +40,6 @@ $upcoming_sessions_result = mysqli_query($conn, $upcoming_sessions_query);
 
 while ($session = mysqli_fetch_assoc($upcoming_sessions_result)) {
     $appointments[] = [
-        'title' => 'Appointment',
         'start' => $session['appointment_date'] . 'T' . $session['appointment_time']
     ];
 }
@@ -175,6 +174,31 @@ switch ($page) {
                     border-radius: 10px;
                     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
                 }
+                /* Reduce height of calendar date cells and inner content */
+                .fc .fc-daygrid-day {
+                    height: 40px !important;
+                    padding: 2px !important;
+                }
+                .fc .fc-daygrid-day-frame {
+                    height: 40px !important;
+                    padding: 0 !important;
+                }
+                .fc .fc-daygrid-day-top {
+                    padding: 2px 4px !important;
+                }
+                /* Remove event dot from dayGrid events */
+                .fc .fc-daygrid-event-dot {
+                    display: none !important;
+                }
+                /* Remove bullet point from event start time */
+                .fc .fc-event-time,
+                .fc .fc-event-time::before {
+                    list-style-type: none !important;
+                    padding-left: 0 !important;
+                    content: none !important;
+                    margin: 0 !important;
+                    color: red !important;
+                }
             </style>
         </head>
         <body style="position: relative;  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('H1.jpg'); background-size: cover; background-position: center; background-attachment: local; height: 100vh; display: flex; flex-direction: column; animation: fadeIn 1.5s ease-in-out;">
@@ -187,7 +211,7 @@ switch ($page) {
                 <hr>
                 <a href="patient_dashboard.php?page=home" class="<?php echo ($page == 'home') ? 'active' : ''; ?>">Home</a>
                 <a href="my_doctors.php" class="<?php echo ($page == 'my_doctors') ? 'active' : ''; ?>">My Doctors</a>
-                <a href="my_sessions.php" class="<?php echo ($page == 'my_sessions') ? 'active' : ''; ?>">Scheduled Sessions</a>
+                <a href="my_sessions.php" class="<?php echo ($page == 'my_sessions') ? 'active' : ''; ?>">My Sessions</a>
                 <a href="my_bookings.php" class="<?php echo ($page == 'my_bookings') ? 'active' : ''; ?>">My Bookings</a>
                 <a href="patient_settings.php" class="<?php echo ($page == 'settings') ? 'active' : ''; ?>">Settings</a>
             </div>
@@ -227,10 +251,24 @@ switch ($page) {
                     var calendar = new FullCalendar.Calendar(calendarEl, {
                         initialView: 'dayGridMonth',
                         events: <?php echo $appointments_json; ?>,
-                        headerToolbar: {
-                            left: 'prev,next today',
-                            center: 'title',
-                            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                        displayEventTime: true,
+                        displayEventEnd: false,
+                        eventTimeFormat: { // 24-hour format
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: false
+                        },
+                        eventDidMount: function(info) {
+                            console.log('Event rendered:', info.event);
+                            // Ensure event title is fully visible and not clipped
+                            info.el.style.whiteSpace = 'normal';
+                            info.el.style.overflow = 'visible';
+                            info.el.style.textOverflow = 'unset';
+                            info.el.style.height = 'auto';
+                        },
+                        eventClick: function(info) {
+                            // Redirect to my_sessions page on appointment click
+                            window.location.href = 'my_sessions.php';
                         }
                     });
                     calendar.render();

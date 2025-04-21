@@ -26,8 +26,8 @@ if (mysqli_num_rows($result) > 0) {
     exit();
 }
 
-// Fetch session details for the patient
-$sessions_query = "SELECT d.name AS doctor_name, a.appointment_date, a.appointment_time 
+// Fetch session details for the patient including status and all sessions
+$sessions_query = "SELECT d.name AS doctor_name, a.appointment_date, a.appointment_time, a.status 
                    FROM appointments a
                    JOIN doctors d ON a.doctor_id = d.doctor_id
                    WHERE a.patient_id = '$patient_id'
@@ -151,7 +151,7 @@ $sessions_result = mysqli_query($conn, $sessions_query);
         <hr>
         <a href="patient_dashboard.php">Home</a>
         <a href="my_doctors.php">My Doctors</a>
-        <a href="my_sessions.php" class="active">Scheduled Sessions</a>
+        <a href="my_sessions.php" class="active">My Sessions</a>
         <a href="my_bookings.php">My Bookings</a>
         <a href="patient_settings.php">Settings</a>
     </div>
@@ -159,7 +159,7 @@ $sessions_result = mysqli_query($conn, $sessions_query);
     <!-- Main Content -->
     <div class="main-content">
         <div class="header-section">
-        <h3>Scheduled Sessions</h3>
+        <h3>My Sessions</h3>
         </div>
         <!-- Session Details Table -->
         <table class="table">
@@ -168,6 +168,7 @@ $sessions_result = mysqli_query($conn, $sessions_query);
                     <th>Doctor Name</th>
                     <th>Session Date</th>
                     <th>Session Time</th>
+                    <th>Session Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -177,15 +178,44 @@ $sessions_result = mysqli_query($conn, $sessions_query);
                             <td><?php echo $session['doctor_name']; ?></td>
                             <td><?php echo $session['appointment_date']; ?></td>
                             <td><?php echo $session['appointment_time']; ?></td>
+                            <td><?php echo ucfirst($session['status']); ?></td>
+                            <td><a href="my_sessions.php?appointment_id=<?php echo $session['appointment_id']; ?>" class="btn btn-primary btn-sm">View Details</a></td>
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="3">No session details available.</td>
+                        <td colspan="5">No session details available.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
         </table>
+
+        <?php
+        if (isset($_GET['appointment_id'])) {
+            $appointment_id = $_GET['appointment_id'];
+
+            // Fetch therapy notes for the appointment
+            $notes_query = "SELECT progress_notes, session_date FROM therapy_sessions WHERE appointment_id = '$appointment_id' ORDER BY session_date DESC";
+            $notes_result = mysqli_query($conn, $notes_query);
+
+            if (mysqli_num_rows($notes_result) > 0) {
+                echo '<div class="therapy-notes-section" style="margin-top: 30px; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">';
+                echo '<h4>Therapy Notes</h4>';
+                while ($note = mysqli_fetch_assoc($notes_result)) {
+                    echo '<div style="margin-bottom: 15px;">';
+                    echo '<strong>Date: ' . htmlspecialchars($note['session_date']) . '</strong><br>';
+                    echo '<p>' . nl2br(htmlspecialchars($note['progress_notes'])) . '</p>';
+                    echo '</div>';
+                }
+                echo '</div>';
+            } else {
+                echo '<div class="therapy-notes-section" style="margin-top: 30px; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">';
+                echo '<h4>Therapy Notes</h4>';
+                echo '<p>No therapy notes available for this appointment.</p>';
+                echo '</div>';
+            }
+        }
+        ?>
     </div>
 
 </body>

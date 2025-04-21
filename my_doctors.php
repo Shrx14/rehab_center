@@ -164,7 +164,7 @@ $doctors_result = mysqli_query($conn, $doctors_query);
         <hr>
         <a href="patient_dashboard.php">Home</a>
         <a href="my_doctors.php" class="active">My Doctors</a>
-        <a href="my_sessions.php">Scheduled Sessions</a>
+        <a href="my_sessions.php">My Sessions</a>
         <a href="my_bookings.php">My Bookings</a>
         <a href="patient_settings.php">Settings</a>
     </div>

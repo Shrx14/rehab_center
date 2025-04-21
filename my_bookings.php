@@ -187,7 +187,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <hr>
         <a href="patient_dashboard.php">Home</a>
         <a href="my_doctors.php">My Doctors</a>
-        <a href="my_sessions.php">Scheduled Sessions</a>
+        <a href="my_sessions.php">My Sessions</a>
         <a href="my_bookings.php" class="active">My Bookings</a>
         <a href="patient_settings.php">Settings</a>
     </div>

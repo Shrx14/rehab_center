@@ -90,11 +90,6 @@ $session_count = mysqli_fetch_assoc($session_count_result)['session_count'];
             opacity: 0;
             animation: slideInLeft 0.5s ease-out forwards;
         }
-        .sidebar a:nth-child(1) { animation-delay: 0.2s; }
-        .sidebar a:nth-child(2) { animation-delay: 0.3s; }
-        .sidebar a:nth-child(3) { animation-delay: 0.4s; }
-        .sidebar a:nth-child(4) { animation-delay: 0.5s; }
-        .sidebar a:nth-child(5) { animation-delay: 0.6s; }
         .sidebar a:hover {
             background-color: #495057;
         }
@@ -117,10 +112,6 @@ $session_count = mysqli_fetch_assoc($session_count_result)['session_count'];
             opacity: 0;
             animation: slideInUp 0.5s ease-out forwards;
         }
-        .card:nth-child(1) { animation-delay: 0.2s; }
-        .card:nth-child(2) { animation-delay: 0.3s; }
-        .card:nth-child(3) { animation-delay: 0.4s; }
-        .card:nth-child(4) { animation-delay: 0.5s; }
         .card h5 {
             margin-bottom: 12px;
             font-weight: bold;

@@ -76,11 +76,7 @@ $sessions_result = mysqli_query($conn, $sessions_query);
             opacity: 0;
             animation: slideInLeft 0.5s ease-out forwards;
         }
-        .sidebar a:nth-child(1) { animation-delay: 0.2s; }
-        .sidebar a:nth-child(2) { animation-delay: 0.3s; }
-        .sidebar a:nth-child(3) { animation-delay: 0.4s; }
-        .sidebar a:nth-child(4) { animation-delay: 0.5s; }
-        .sidebar a:nth-child(5) { animation-delay: 0.6s; }
+
 
         .sidebar a:hover {
             background-color: #495057;
