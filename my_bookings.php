@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // Insert the appointment into the appointments table
         $insert_query = "INSERT INTO appointments (patient_id, doctor_id, appointment_date, appointment_time, status)
-                         VALUES ('$patient_id', '$doctor_id', '$appointment_date', '$appointment_time', 'Pending')";
+                         VALUES ('$patient_id', '$doctor_id', '$appointment_date', '$appointment_time', 'Scheduled')";
 
         if (mysqli_query($conn, $insert_query)) {
             // Update the appointment count in the doctors table
