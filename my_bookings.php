@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $doctor_id = $_POST['doctor_id'];
     $appointment_date = $_POST['appointment_date'];
     $appointment_time = $_POST['appointment_time'];
-    $message = $_POST['message'];
+    $message = $_POST['message'] ?? '';
 
     // Check if the selected doctor is available
     $availability_query = "SELECT appointment_count, max_patients, name FROM doctors WHERE doctor_id='$doctor_id'";
