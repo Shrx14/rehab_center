@@ -27,7 +27,7 @@ if (mysqli_num_rows($result) > 0) {
 }
 
 // Fetch session details for the patient including status and all sessions
-$sessions_query = "SELECT d.name AS doctor_name, a.appointment_date, a.appointment_time, a.status 
+$sessions_query = "SELECT a.appointment_id, d.name AS doctor_name, a.appointment_date, a.appointment_time, a.status 
                    FROM appointments a
                    JOIN doctors d ON a.doctor_id = d.doctor_id
                    WHERE a.patient_id = '$patient_id'
@@ -169,6 +169,7 @@ $sessions_result = mysqli_query($conn, $sessions_query);
                     <th>Session Date</th>
                     <th>Session Time</th>
                     <th>Session Status</th>
+                    <th>Therapy Details</th>
                 </tr>
             </thead>
             <tbody>
