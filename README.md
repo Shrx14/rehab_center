@@ -53,6 +53,10 @@ This project is a web-based Management Information System (MIS) designed for a R
 ## Contributing
 Contributions are welcome! If you'd like to contribute to this project, please fork the repository and submit a pull request with your changes.
 
+## Collaborators
+- Pratiksha Patil https://github.com/Pratikshaa8
+- Srujan Yadav https://github.com/SrujaN1906
+
 ## License
 [MIT License](LICENSE)
 
